@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LG Howson — Crew Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --crimson:#B11722; --crimson-dk:#8E1019; --crimson-tint:#FBEAEB;
+    --ink:#16191C; --steel:#23272B; --mute:#6B7177;
+    --line:#E4E7EA; --bg:#F4F6F8; --card:#FFFFFF;
+    --green:#1E8E4A; --green-tint:#E6F4EC;
+    --amber:#B7791F; --amber-tint:#FBF1DC;
+    --blue:#1F5FB2; --blue-tint:#E7F0FB;
+    --shadow:0 1px 2px rgba(16,25,28,.04),0 6px 20px rgba(16,25,28,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.45;padding-bottom:60px}
+  h1,h2,h3,.disp{font-family:'Archivo',sans-serif;letter-spacing:-.01em}
+  .mono{font-family:'IBM Plex Mono',monospace}
+
+  /* Header */
+  header{background:var(--ink);color:#fff;padding:18px 24px;position:sticky;top:0;z-index:50;
+    box-shadow:0 2px 12px rgba(0,0,0,.18)}
+  .hwrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px}
+  .mark{width:40px;height:40px;border-radius:9px;background:var(--crimson);display:grid;place-items:center;
+    font-family:'Archivo';font-weight:800;font-size:18px;color:#fff;flex:none}
+  .logo h1{font-size:19px;font-weight:800;line-height:1.1}
+  .logo p{font-size:12px;color:#9aa0a6;font-weight:500}
+  .hspace{flex:1}
+  .today-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .refresh{background:var(--crimson);border:none;color:#fff;padding:8px 14px;border-radius:8px;
+    font:inherit;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s}
+  .refresh:hover{background:var(--crimson-dk)}
+  .refresh i{width:15px;height:15px}
+
+  /* Tabs */
+  .tabs{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:6px;border-bottom:1px solid var(--line)}
+  .tab{background:none;border:none;padding:16px 6px;margin-right:18px;font:inherit;font-weight:600;font-size:15px;
+    color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:8px}
+  .tab i{width:17px;height:17px}
+  .tab.active{color:var(--crimson);border-bottom-color:var(--crimson)}
+
+  main{max-width:1200px;margin:0 auto;padding:24px}
+
+  /* Stat cards */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .stat .lbl{font-size:12px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:6px}
+  .stat .lbl i{width:14px;height:14px}
+  .stat .num{font-family:'Archivo';font-weight:800;font-size:34px;line-height:1.1;margin-top:6px}
+  .stat.c .num{color:var(--crimson)} .stat.g .num{color:var(--green)}
+  .stat.a .num{color:var(--amber)} .stat.b .num{color:var(--blue)}
+
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+  .search{flex:1;min-width:200px;position:relative}
+  .search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--mute)}
+  .search input{width:100%;padding:11px 12px 11px 36px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:14px;background:var(--card)}
+  .search input:focus{outline:none;border-color:var(--crimson);box-shadow:0 0 0 3px var(--crimson-tint)}
+
+  /* Job grid */
+  .jobgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .job{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .job-h{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px}
+  .job-h .bar{width:4px;align-self:stretch;border-radius:3px;background:var(--crimson);flex:none}
+  .job-h.leave .bar{background:var(--amber)} .job-h.off .bar{background:var(--mute)} .job-h.other .bar{background:var(--blue)}
+  .job-t{flex:1}
+  .job-t h3{font-size:16px;font-weight:700}
+  .job-t .sub{font-size:12.5px;color:var(--mute);margin-top:1px}
+  .job-t .fore{font-size:12px;color:var(--crimson);font-weight:600;margin-top:4px;display:flex;align-items:center;gap:5px}
+  .job-t .fore i{width:12px;height:12px}
+  .cnt{background:var(--crimson-tint);color:var(--crimson-dk);font-weight:700;font-size:13px;
+    padding:3px 10px;border-radius:999px;flex:none;font-family:'IBM Plex Mono'}
+  .job-h.leave .cnt{background:var(--amber-tint);color:var(--amber)}
+  .job-h.off .cnt{background:#eceef0;color:var(--mute)}
+  .job-h.other .cnt{background:var(--blue-tint);color:var(--blue)}
+  .crew{padding:8px 16px 14px;display:flex;flex-direction:column;gap:2px}
+  .person{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:14px;font-weight:500}
+  .av{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;
+    font-size:11px;font-weight:700;font-family:'Archivo';flex:none}
+  .role-tag{font-size:10px;font-weight:700;color:var(--crimson);background:var(--crimson-tint);padding:1px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.03em}
+
+  /* Hours table */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .ranges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+  .rbtn{background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:8px;font:inherit;
+    font-size:13px;font-weight:600;color:var(--steel);cursor:pointer;transition:.12s}
+  .rbtn:hover{border-color:var(--crimson)}
+  .rbtn.active{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+  .ranges .dates{margin-left:auto;font-size:13px;color:var(--mute);font-weight:500}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:12px 16px;font-size:14px}
+  thead th{background:#FAFBFC;border-bottom:2px solid var(--line);font-size:12px;text-transform:uppercase;
+    letter-spacing:.04em;color:var(--mute);font-weight:700;cursor:pointer;user-select:none;white-space:nowrap}
+  thead th.num,td.num{text-align:right;font-family:'IBM Plex Mono';font-weight:600}
+  tbody tr{border-bottom:1px solid var(--line)}
+  tbody tr:hover{background:#FAFBFC}
+  tbody tr:last-child{border-bottom:none}
+  .nm{display:flex;align-items:center;gap:10px;font-weight:600}
+  .hrs{font-weight:700;color:var(--crimson)}
+  .bartd{width:160px}
+  .minibar{height:8px;background:var(--crimson);border-radius:4px;min-width:2px}
+  tfoot td{background:#FAFBFC;border-top:2px solid var(--line);font-weight:700;font-size:14px}
+  .pill-sm{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;font-family:'IBM Plex Mono'}
+  .p-leave{background:var(--amber-tint);color:var(--amber)} .p-sick{background:var(--crimson-tint);color:var(--crimson-dk)}
+  .p-other{background:var(--blue-tint);color:var(--blue)} .p-zero{color:#c2c6ca}
+
+  /* Rota grid */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .leg{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--steel);
+    background:var(--card);border:1px solid var(--line);padding:4px 10px 4px 6px;border-radius:999px}
+  .leg .sw{width:14px;height:14px;border-radius:4px;flex:none}
+  .gridscroll{overflow:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);background:var(--card);max-height:72vh}
+  #rotaTable{border-collapse:separate;border-spacing:0;width:100%}
+  #rotaTable th,#rotaTable td{padding:0;font-size:12.5px;white-space:nowrap}
+  #rotaTable thead th{position:sticky;top:0;z-index:3;background:#FAFBFC;border-bottom:2px solid var(--line);
+    padding:9px 10px;text-align:center;font-size:11px;font-weight:700;color:var(--steel);text-transform:none;cursor:default;min-width:78px}
+  #rotaTable thead th .dow{display:block;color:var(--mute);font-size:10px;font-weight:600}
+  #rotaTable thead th.namecol,#rotaTable tbody td.namecol{position:sticky;left:0;z-index:2;background:var(--card);
+    text-align:left;border-right:2px solid var(--line);min-width:130px;box-shadow:2px 0 4px -2px rgba(16,25,28,.08)}
+  #rotaTable thead th.namecol{z-index:4}
+  #rotaTable thead th.movecol{min-width:64px}
+  #rotaTable tbody td.namecol{padding:7px 12px}
+  #rotaTable tbody td.namecol .nm{font-weight:600;font-size:13px;gap:8px}
+  #rotaTable tbody td.namecol .av{width:24px;height:24px}
+  #rotaTable tbody tr:nth-child(even) td.namecol{background:#FAFBFC}
+  .cell{height:38px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);
+    border-right:1px solid #EEF0F2;font-weight:600;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.18);
+    padding:0 6px;overflow:hidden;text-overflow:ellipsis}
+  .cell.empty{background:transparent;color:#d4d8db;font-weight:400}
+  .cell.off{color:var(--steel);text-shadow:none}
+  .movecell{text-align:center;font-family:'IBM Plex Mono';font-weight:700;font-size:13px;border-bottom:1px solid var(--line);
+    border-right:2px solid var(--line);color:var(--mute)}
+  .movecell.hot{color:var(--crimson)}
+  #rotaTable tbody tr:hover td .cell{filter:brightness(1.05)}
+
+  .chartwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:20px;margin-bottom:20px}
+  .chartwrap h3{font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .chartwrap h3 i{width:17px;height:17px;color:var(--crimson)}
+  #hoursChart{height:300px!important}
+
+  .loading,.errbox{text-align:center;padding:60px 20px;color:var(--mute)}
+  .errbox{color:var(--crimson-dk)}
+  .spin{display:inline-block;width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--crimson);
+    border-radius:50%;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .hidden{display:none!important}
+  .note{font-size:12.5px;color:var(--mute);margin-top:14px;line-height:1.5}
+  @media(max-width:600px){.logo h1{font-size:16px} main{padding:16px} .stat .num{font-size:28px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div class="logo">
+      <div class="mark">LGH</div>
+      <div><h1>Crew Dashboard</h1><p>LG Howson Ltd · who's where, every day</p></div>
+    </div>
+    <div class="hspace"></div>
+    <div class="today-pill"><i data-lucide="calendar"></i><span id="todayDate">—</span></div>
+    <div class="today-pill" id="logStatus"><i data-lucide="database"></i><span>Daily Log: …</span></div>
+    <button class="refresh" id="refreshBtn"><i data-lucide="refresh-cw"></i>Refresh</button>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" data-view="today"><i data-lucide="map-pin"></i>Today's Snapshot</button>
+  <button class="tab" data-view="rota"><i data-lucide="layout-grid"></i>Site Rota</button>
+  <button class="tab" data-view="hours"><i data-lucide="clock"></i>Working Hours</button>
+</div>
+
+<main>
+  <div id="loading" class="loading"><div class="spin"></div><p style="margin-top:14px">Loading crew data…</p></div>
+  <div id="error" class="errbox hidden"></div>
+
+  <!-- TODAY -->
+  <section id="view-today" class="hidden">
+    <div class="stats" id="todayStats"></div>
+    <div class="toolbar">
+      <div class="search"><i data-lucide="search"></i><input id="todaySearch" placeholder="Find a person or job…"></div>
+    </div>
+    <div class="jobgrid" id="jobGrid"></div>
+  </section>
+
+  <!-- ROTA -->
+  <section id="view-rota" class="hidden">
+    <div class="ranges" id="rotaRanges">
+      <button class="rbtn active" data-range="week">This week</button>
+      <button class="rbtn" data-range="lastweek">Last week</button>
+      <button class="rbtn" data-range="2weeks">Last 2 weeks</button>
+      <button class="rbtn" data-range="month">This month</button>
+      <span class="dates" id="rotaDates"></span>
+    </div>
+    <div class="toolbar">
+      <div class="search"><i data-lucide="search"></i><input id="rotaSearch" placeholder="Find a person…"></div>
+    </div>
+    <div id="rotaLegend" class="legend"></div>
+    <div class="gridscroll"><table id="rotaTable"></table></div>
+    <p class="note"><strong>Reading the rota:</strong> each row is one person, each column a day.
+      A coloured cell = the site they were on. Read <em>across</em> for one person's week, <em>down</em> for who was on what each day.
+      The <strong>Moves</strong> column counts how many different sites that person worked in the period.</p>
+  </section>
+
+  <!-- HOURS -->
+  <section id="view-hours" class="hidden">
+    <div class="ranges" id="ranges">
+      <button class="rbtn" data-range="week">This week</button>
+      <button class="rbtn" data-range="lastweek">Last week</button>
+      <button class="rbtn active" data-range="month">This month</button>
+      <button class="rbtn" data-range="all">All time</button>
+      <span class="dates" id="rangeDates"></span>
+    </div>
+    <div class="stats" id="hoursStats"></div>
+    <div class="chartwrap">
+      <h3><i data-lucide="bar-chart-3"></i>Hours worked per person</h3>
+      <canvas id="hoursChart" height="120"></canvas>
+    </div>
+    <div class="panel">
+      <table id="hoursTable">
+        <thead><tr>
+          <th data-sort="name">Name</th>
+          <th class="num" data-sort="hours">Hours</th>
+          <th class="num" data-sort="worked">Days worked</th>
+          <th class="num" data-sort="leave">Leave</th>
+          <th class="num" data-sort="sick">Sick</th>
+          <th class="num" data-sort="other">Other</th>
+          <th class="bartd"></th>
+        </tr></thead>
+        <tbody id="hoursBody"></tbody>
+        <tfoot id="hoursFoot"></tfoot>
+      </table>
+    </div>
+    <p class="note"><strong>How hours are counted:</strong> every day a person is logged on an actual job counts as <strong>8 hours</strong>.
+      Days marked Leave, Sick, Other or Unassigned are listed separately and are <em>not</em> counted as worked hours.</p>
+  </section>
+</main>
+
+<script src="dailylog.js"></script>
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVYPfcx3x3isJPr4RUtSEtT9JX10qBrih2jvXti9dFFWUOi1Hd-8w7Bg2pi2IRY13yCA/exec';
+// Daily Log tab, published to web as CSV (File > Share > Publish to web)
+const DAILY_LOG_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCjO3JU9gG1rMZK1mwKTbUHsEJT6-3C2Aeyi_k5-ngzH4FuDgIu4vvy0AIe-0OmnM-pmhl4TJ5Jp8J/pub?gid=1045940438&single=true&output=csv';
+const HOURS_PER_DAY = 8;
+
+let DATA = null, currentRange = 'month', rotaRange = 'week', sortKey = 'hours', sortDir = -1, chart = null;
+const SITE_COLORS = {};
+// Site palette: widely-spaced hues + varied lightness so no two sites look alike.
+// Deliberately NO reds/oranges/yellows — those are reserved for Sick (red) & Leave (yellow).
+const PALETTE = ['#1D4ED8','#16A34A','#DB2777','#7C3AED','#0891B2','#65A30D','#0F766E','#9333EA',
+                 '#1E3A8A','#2DD4BF','#155E75','#84CC16','#5B21B6','#475569','#BE185D','#4338CA'];
+// Semantic (non-work) cell styling
+const SEM = {
+  leave:      {bg:'#FACC15', fg:'#3F2D00'},
+  sick:       {bg:'#DC2626', fg:'#FFFFFF'},
+  other:      {bg:'#E2E8F0', fg:'#475569'},
+  unassigned: {bg:'#F1F5F9', fg:'#94A3B8'}
+};
+function colorFor(label){
+  if(SITE_COLORS[label]) return SITE_COLORS[label];
+  const i = Object.keys(SITE_COLORS).length % PALETTE.length;
+  return SITE_COLORS[label] = PALETTE[i];
+}
+// short, compact site label from a daily-log entry
+function shortSite(label){
+  const k = classify(label);
+  if(k==='leave') return 'Leave';
+  if(k==='sick') return 'Sick';
+  if(k==='other') return 'Other';
+  if(k==='unassigned') return '—';
+  return (label.split('—')[0]||label).trim(); // "P-16 — Forest Valley" -> "P-16"
+}
+
+const $ = s => document.querySelector(s);
+const initials = n => n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+
+// classify a job/bucket label
+function classify(label){
+  const l = (label||'').toLowerCase().trim();
+  if(!l || l==='unassigned') return 'unassigned';
+  if(l.includes('sick')) return 'sick';
+  if(l.includes('leave')) return 'leave';
+  if(l==='other') return 'other';
+  return 'work';
+}
+
+// Parse the published Daily Log CSV (Date, Name, Job / Bucket) -> [{date,name,label}]
+function parseDailyLog(text){
+  if(!text) return [];
+  const rows = csvRows(text);
+  const out = [];
+  for(let i=1;i<rows.length;i++){
+    const [date,name,label] = rows[i];
+    if(date && name) out.push({date:String(date).trim(), name:String(name).trim(), label:String(label||'').trim()});
+  }
+  return out;
+}
+function csvRows(text){
+  const rows=[]; let row=[], cell='', q=false;
+  text = text.replace(/\r/g,'');
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){
+      if(c==='"'){ if(text[i+1]==='"'){cell+='"';i++;} else q=false; }
+      else cell+=c;
+    }else{
+      if(c==='"') q=true;
+      else if(c===','){ row.push(cell); cell=''; }
+      else if(c==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; }
+      else cell+=c;
+    }
+  }
+  if(cell!==''||row.length){ row.push(cell); rows.push(row); }
+  return rows;
+}
+
+async function load(){
+  $('#loading').classList.remove('hidden');
+  $('#error').classList.add('hidden');
+  try{
+    const res = await fetch(APPS_SCRIPT_URL).then(r=>{if(!r.ok)throw new Error('feed HTTP '+r.status);return r.json();});
+    DATA = res;
+    // Prefer the LIVE Apps Script feed's dailyLog (works once Code.gs is redeployed),
+    // falling back to the locally-generated dailylog.js for offline/local use.
+    DATA.dailyLog = (res.dailyLog && res.dailyLog.length) ? res.dailyLog
+                  : (window.DAILY_LOG || []);
+    const ls = $('#logStatus');
+    if(DATA.dailyLog.length){
+      const days = new Set(DATA.dailyLog.map(r=>r.date)).size;
+      const upd = window.DAILY_LOG_UPDATED ? ' · upd '+new Date(window.DAILY_LOG_UPDATED).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '';
+      ls.innerHTML = `<i data-lucide="check-circle-2"></i><span>Daily Log: ${DATA.dailyLog.length} entries · ${days} days${upd}</span>`;
+      ls.style.color = '#7CE0A3';
+    } else {
+      ls.innerHTML = `<i data-lucide="alert-triangle"></i><span>Daily Log: not loaded — run refresh-dailylog.bat</span>`;
+      ls.style.color = '#F2B8B8';
+    }
+    $('#loading').classList.add('hidden');
+    render();
+  }catch(e){
+    $('#loading').classList.add('hidden');
+    $('#error').classList.remove('hidden');
+    $('#error').innerHTML = '<i data-lucide="alert-triangle"></i><p style="margin-top:10px">Could not load data.<br><span style="font-size:13px;color:var(--mute)">'+e.message+
+      ' — check the live feed and the published Daily Log CSV are reachable.</span></p>';
+    lucide.createIcons();
+  }
+}
+
+function render(){
+  const t = new Date();
+  $('#todayDate').textContent = t.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  renderToday();
+  renderRota();
+  renderHours();
+  lucide.createIcons();
+}
+
+/* ---------- TODAY ---------- */
+function renderToday(){
+  const jobs = DATA.jobs||[], staff = DATA.staff||[], alloc = DATA.allocations||[];
+  const roleOf = {}; staff.forEach(s=>roleOf[s.name.trim().toLowerCase()] = s.role);
+  const jobByRef = {}; jobs.forEach(j=>jobByRef[j.ref.trim().toLowerCase()] = j);
+
+  // group allocations into buckets
+  const groups = {}; // key -> {title,sub,fore,kind,people:[]}
+  alloc.forEach(a=>{
+    const b = (a.bucket||'').trim();
+    const kind = classify(b);
+    let key,title,sub='',fore='';
+    if(kind==='work'){
+      const j = jobByRef[b.toLowerCase()];
+      key = b.toLowerCase();
+      title = j ? j.ref : b; sub = j ? (j.site||'') : ''; fore = j? j.foreman : '';
+    } else {
+      key = kind;
+      title = {leave:'On Leave',sick:'Off Sick',other:'Other / Yard',unassigned:'Unassigned'}[kind];
+    }
+    (groups[key] = groups[key] || {title,sub,fore,kind,people:[]}).people.push({
+      name:a.name, role:roleOf[a.name.trim().toLowerCase()]||''
+    });
+  });
+
+  // stats
+  let working=0,leave=0,off=0;
+  Object.values(groups).forEach(g=>{
+    if(g.kind==='work') working+=g.people.length;
+    else if(g.kind==='leave') leave+=g.people.length;
+    else off+=g.people.length;
+  });
+  $('#todayStats').innerHTML = `
+    ${stat('Crew logged', alloc.length,'b','users')}
+    ${stat('On site', working,'g','hard-hat')}
+    ${stat('On leave', leave,'a','palmtree')}
+    ${stat('Sick / other', off,'c','user-minus')}`;
+
+  // order: work jobs first (by headcount), then leave/other/sick/unassigned
+  const order = Object.entries(groups).sort((a,b)=>{
+    const wa=a[1].kind==='work'?0:1, wb=b[1].kind==='work'?0:1;
+    if(wa!==wb) return wa-wb;
+    return b[1].people.length - a[1].people.length;
+  });
+  paintGrid(order);
+  $('#todaySearch').oninput = ()=>paintGrid(order, $('#todaySearch').value.toLowerCase());
+}
+
+function paintGrid(order, q=''){
+  const cls = {work:'',leave:'leave',sick:'off',other:'other',unassigned:'off'};
+  let html = order.map(([k,g])=>{
+    let people = g.people;
+    if(q){
+      const titleMatch = (g.title+' '+g.sub).toLowerCase().includes(q);
+      if(!titleMatch) people = people.filter(p=>p.name.toLowerCase().includes(q));
+      if(!titleMatch && !people.length) return '';
+    }
+    return `<div class="job"><div class="job-h ${cls[g.kind]}">
+        <div class="bar"></div>
+        <div class="job-t"><h3>${esc(g.title)}</h3>
+          ${g.sub?`<div class="sub">${esc(g.sub)}</div>`:''}
+          ${g.fore?`<div class="fore"><i data-lucide="user-cog"></i>${esc(g.fore)}</div>`:''}
+        </div>
+        <span class="cnt">${people.length}</span>
+      </div>
+      <div class="crew">${people.map(p=>`<div class="person">
+        <span class="av">${initials(p.name)}</span><span>${esc(p.name)}</span>
+        ${p.role?`<span class="role-tag">${esc(p.role)}</span>`:''}</div>`).join('')}</div>
+    </div>`;
+  }).join('');
+  $('#jobGrid').innerHTML = html || '<p class="loading">No matches.</p>';
+  lucide.createIcons();
+}
+
+/* ---------- ROTA GRID ---------- */
+function renderRota(){
+  const [from,to] = rangeBounds(rotaRange);
+  $('#rotaDates').textContent = fmt(from)+' – '+fmt(to);
+
+  const log = (DATA.dailyLog||[]).filter(r=>{const d=new Date(r.date);return d>=from&&d<=to;});
+
+  // unique sorted day columns actually present
+  const dayset = [...new Set(log.map(r=>r.date))].sort();
+  // map: name -> date -> label
+  const grid={}, names=[];
+  log.forEach(r=>{
+    if(!grid[r.name]){grid[r.name]={}; names.push(r.name);}
+    grid[r.name][r.date]=r.label; // last wins
+  });
+
+  // staff ordering: managers first, then alpha
+  const roleOf={}; (DATA.staff||[]).forEach(s=>roleOf[s.name.trim().toLowerCase()]=s.role);
+  names.sort((a,b)=>{
+    const ma=/manager/i.test(roleOf[a.trim().toLowerCase()]||'')?0:1;
+    const mb=/manager/i.test(roleOf[b.trim().toLowerCase()]||'')?0:1;
+    return ma-mb || a.localeCompare(b);
+  });
+
+  ROTA = {dayset, grid, names, roleOf};
+  // build legend from sites used (work sites first, then off-types)
+  const used={};
+  log.forEach(r=>{const s=shortSite(r.label); if(classify(r.label)==='work') used[s]=true;});
+  $('#rotaLegend').innerHTML = Object.keys(used).sort().map(s=>
+    `<span class="leg"><span class="sw" style="background:${colorFor(s)}"></span>${esc(s)}</span>`).join('')
+    + `<span class="leg"><span class="sw" style="background:${SEM.leave.bg}"></span>Leave</span>`
+    + `<span class="leg"><span class="sw" style="background:${SEM.sick.bg}"></span>Sick</span>`
+    + `<span class="leg"><span class="sw" style="background:${SEM.other.bg}"></span>Other</span>`;
+
+  paintRota('');
+  $('#rotaSearch').oninput = ()=>paintRota($('#rotaSearch').value.toLowerCase());
+}
+let ROTA=null;
+function paintRota(q){
+  const {dayset,grid,names,roleOf}=ROTA;
+  if(!dayset.length){ $('#rotaTable').innerHTML='<tbody><tr><td class="loading" style="padding:50px">No log entries in this period.</td></tr></tbody>'; return; }
+  const dfmt=ds=>{const d=new Date(ds);return {dow:d.toLocaleDateString('en-GB',{weekday:'short'}),
+    dm:d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})};};
+
+  let head = '<thead><tr><th class="namecol">Crew</th>'
+    + dayset.map(ds=>{const f=dfmt(ds);return `<th><span class="dow">${f.dow}</span>${f.dm}</th>`;}).join('')
+    + '<th class="movecol">Moves</th></tr></thead>';
+
+  const shown = names.filter(n=>!q || n.toLowerCase().includes(q));
+  let body = '<tbody>' + shown.map(n=>{
+    const sites=new Set();
+    const cells = dayset.map(ds=>{
+      const lab=grid[n][ds];
+      if(lab==null) return '<td><div class="cell empty">·</div></td>';
+      const k=classify(lab), short=shortSite(lab);
+      if(k==='work'){ sites.add(short);
+        return `<td><div class="cell" style="background:${colorFor(short)}" title="${esc(lab)}">${esc(short)}</div></td>`; }
+      const s=SEM[k]||SEM.unassigned;
+      return `<td><div class="cell off" style="background:${s.bg};color:${s.fg};text-shadow:none" title="${esc(lab)}">${esc(short)}</div></td>`;
+    }).join('');
+    const moves=sites.size;
+    return `<tr><td class="namecol"><div class="nm"><span class="av">${initials(n)}</span>${esc(n)}</div></td>`
+      + cells + `<td class="movecell ${moves>=3?'hot':''}">${moves||'–'}</td></tr>`;
+  }).join('') + '</tbody>';
+
+  $('#rotaTable').innerHTML = head+body;
+}
+
+/* ---------- HOURS ---------- */
+function rangeBounds(r){
+  const now=new Date(); now.setHours(0,0,0,0);
+  const day=(now.getDay()+6)%7; // Mon=0
+  const monday=new Date(now); monday.setDate(now.getDate()-day);
+  if(r==='week') return [monday, addD(monday,6)];
+  if(r==='2weeks') return [addD(monday,-7), addD(monday,6)];
+  if(r==='lastweek') return [addD(monday,-7), addD(monday,-1)];
+  if(r==='month') return [new Date(now.getFullYear(),now.getMonth(),1), new Date(now.getFullYear(),now.getMonth()+1,0)];
+  return [new Date('2000-01-01'), new Date('2999-01-01')];
+}
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const fmt=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+
+function renderHours(){
+  const [from,to] = rangeBounds(currentRange);
+  $('#rangeDates').textContent = currentRange==='all' ? 'All recorded days' : fmt(from)+' – '+fmt(to);
+
+  const log = (DATA.dailyLog||[]).filter(r=>{
+    const d=new Date(r.date); return d>=from && d<=to;
+  });
+
+  // dedupe one entry per person per day (keep last)
+  const seen={};
+  log.forEach(r=>{ seen[r.date+'|'+r.name]=r; });
+  const rows = Object.values(seen);
+
+  const per={}; const days=new Set();
+  rows.forEach(r=>{
+    days.add(r.date);
+    const k=classify(r.label);
+    const p = per[r.name] = per[r.name] || {name:r.name,work:0,leave:0,sick:0,other:0,unassigned:0};
+    p[k]++;
+  });
+  const list = Object.values(per).map(p=>({...p, hours:p.work*HOURS_PER_DAY}));
+
+  // stats
+  const totHours = list.reduce((s,p)=>s+p.hours,0);
+  const totWork = list.reduce((s,p)=>s+p.work,0);
+  const totLeave = list.reduce((s,p)=>s+p.leave,0);
+  $('#hoursStats').innerHTML = `
+    ${stat('Total hours', totHours.toLocaleString(),'c','clock')}
+    ${stat('Days on site', totWork,'g','hard-hat')}
+    ${stat('Days logged', days.size,'b','calendar-days')}
+    ${stat('Leave days', totLeave,'a','palmtree')}`;
+
+  list.sort(cmp);
+  paintHours(list);
+  paintChart(list);
+}
+
+function cmp(a,b){
+  let v;
+  if(sortKey==='name') v = a.name.localeCompare(b.name);
+  else v = (a[sortKey]||0)-(b[sortKey]||0);
+  return v*sortDir;
+}
+
+function paintHours(list){
+  const max = Math.max(1,...list.map(p=>p.hours));
+  $('#hoursBody').innerHTML = list.map(p=>`<tr>
+    <td><div class="nm"><span class="av">${initials(p.name)}</span>${esc(p.name)}</div></td>
+    <td class="num hrs">${p.hours}</td>
+    <td class="num">${p.work||'<span class=p-zero>0</span>'}</td>
+    <td class="num">${p.leave?`<span class="pill-sm p-leave">${p.leave}</span>`:'<span class=p-zero>0</span>'}</td>
+    <td class="num">${p.sick?`<span class="pill-sm p-sick">${p.sick}</span>`:'<span class=p-zero>0</span>'}</td>
+    <td class="num">${p.other?`<span class="pill-sm p-other">${p.other}</span>`:'<span class=p-zero>0</span>'}</td>
+    <td class="bartd"><div class="minibar" style="width:${Math.round(p.hours/max*100)}%"></div></td>
+  </tr>`).join('') || '<tr><td colspan="7" class="loading">No data in this period.</td></tr>';
+
+  const tw=list.reduce((s,p)=>s+p.work,0), th=list.reduce((s,p)=>s+p.hours,0);
+  const tl=list.reduce((s,p)=>s+p.leave,0), ts=list.reduce((s,p)=>s+p.sick,0), to=list.reduce((s,p)=>s+p.other,0);
+  $('#hoursFoot').innerHTML = list.length?`<tr><td>Total · ${list.length} people</td>
+    <td class="num hrs">${th}</td><td class="num">${tw}</td><td class="num">${tl}</td>
+    <td class="num">${ts}</td><td class="num">${to}</td><td></td></tr>`:'';
+}
+
+function paintChart(list){
+  const top=[...list].sort((a,b)=>b.hours-a.hours).filter(p=>p.hours>0);
+  const ctx=$('#hoursChart');
+  if(chart) chart.destroy();
+  chart=new Chart(ctx,{type:'bar',data:{
+    labels:top.map(p=>p.name),
+    datasets:[{label:'Hours',data:top.map(p=>p.hours),backgroundColor:'#B11722',borderRadius:5,maxBarThickness:34}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:c=>c.parsed.y+' hrs ('+(c.parsed.y/HOURS_PER_DAY)+' days)'}}},
+    scales:{y:{beginAtZero:true,grid:{color:'#EEF0F2'},ticks:{font:{family:'IBM Plex Mono'}}},
+      x:{grid:{display:false},ticks:{font:{family:'IBM Plex Sans'},maxRotation:60,minRotation:0}}}}});
+}
+
+/* ---------- helpers ---------- */
+function stat(lbl,num,cls,icon){
+  return `<div class="stat ${cls}"><div class="lbl"><i data-lucide="${icon}"></i>${lbl}</div><div class="num">${num}</div></div>`;
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+/* ---------- events ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  const v=t.dataset.view;
+  ['today','rota','hours'].forEach(x=>$('#view-'+x).classList.toggle('hidden',v!==x));
+});
+document.querySelectorAll('#rotaRanges .rbtn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#rotaRanges .rbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); rotaRange=b.dataset.range; renderRota(); lucide.createIcons();
+});
+document.querySelectorAll('#ranges .rbtn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#ranges .rbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); currentRange=b.dataset.range; renderHours(); lucide.createIcons();
+});
+document.querySelectorAll('#hoursTable thead th[data-sort]').forEach(th=>th.onclick=()=>{
+  const k=th.dataset.sort;
+  if(sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=k==='name'?1:-1;}
+  renderHours(); lucide.createIcons();
+});
+$('#refreshBtn').onclick=load;
+
+// initial view toggles
+$('#view-today').classList.remove('hidden');
+lucide.createIcons();
+load();
+</script>
+</body>
+</html>

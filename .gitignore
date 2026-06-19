@@ -1,0 +1,3 @@
+# Contains staff names + leave/sick history — keep OUT of the public repo.
+# The hosted dashboard loads this data live from the Apps Script feed instead.
+dailylog.js
