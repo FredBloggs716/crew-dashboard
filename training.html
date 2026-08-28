@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Training Programme</title>
+<style>
+  :root{
+    --bg:#0f1113; --card:#171a1d; --card2:#1d2126; --line:#262b30;
+    --ink:#e8eaed; --mut:#9aa3ab; --faint:#6d757d;
+    --accent:#B11722; --accent-lt:#e04552; --ok:#3fae6b; --warn:#c9963a; --bad:#d1483f;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:22px 16px 90px}
+
+  /* Header */
+  header{margin-bottom:18px}
+  .eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-lt);font-weight:700}
+  h1{font-size:1.6rem;margin:4px 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:.9rem}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0 18px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px}
+  .stat .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:700}
+  .stat .num{font-size:1.5rem;font-weight:700;margin-top:2px;letter-spacing:-.02em}
+  .stat .num small{font-size:.8rem;color:var(--mut);font-weight:500}
+
+  /* Week tabs */
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
+  .tab{flex:none;padding:7px 14px;background:var(--card);border:1px solid var(--line);border-radius:20px;
+    color:var(--mut);cursor:pointer;font:inherit;font-size:.84rem;white-space:nowrap}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-left:6px;vertical-align:middle}
+  .weekline{color:var(--mut);font-size:.85rem;margin:8px 0 18px;padding-left:2px}
+  .weekline b{color:var(--ink);font-weight:600}
+
+  /* Day card */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  .day.today{border-color:var(--accent);box-shadow:0 0 0 1px rgba(177,23,34,.35)}
+  .day-h{padding:14px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+  .chip{flex:none;width:44px;text-align:center;padding:5px 0;border-radius:7px;font-size:.72rem;font-weight:700;
+    letter-spacing:.05em;text-transform:uppercase}
+  .chip.iron{background:rgba(177,23,34,.16);color:var(--accent-lt);border:1px solid rgba(177,23,34,.35)}
+  .chip.skill{background:rgba(63,174,107,.12);color:var(--ok);border:1px solid rgba(63,174,107,.3)}
+  .day-t{flex:1;min-width:0}
+  .day-t h2{font-size:1.02rem;margin:0;font-weight:650}
+  .day-t .aim{color:var(--mut);font-size:.83rem;margin-top:1px}
+  .day-pct{flex:none;color:var(--faint);font-size:.78rem;font-variant-numeric:tabular-nums;padding-top:3px}
+  .caret{flex:none;color:var(--faint);font-size:.8rem;transition:transform .18s;padding-top:3px}
+  .day.open .caret{transform:rotate(90deg)}
+  .progress{height:3px;background:var(--line)}
+  .progress>div{height:100%;background:var(--ok);width:0;transition:width .25s}
+  .day-b{display:none;padding:4px 16px 16px}
+  .day.open .day-b{display:block}
+
+  /* Readiness */
+  .readiness{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:11px 12px;margin:10px 0 4px}
+  .readiness .rl{font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:700;margin-bottom:8px}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:8px}
+  .rgrid label{display:block;font-size:.72rem;color:var(--mut);margin-bottom:3px}
+  select,input[type=text],textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:6px;
+    color:var(--ink);padding:6px 8px;font:inherit;font-size:.84rem}
+  select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(177,23,34,.2)}
+  select.warn{border-color:var(--warn);color:var(--warn)}
+  select.bad{border-color:var(--bad);color:var(--bad)}
+  .flags{margin-top:10px;border-left:3px solid var(--warn);background:rgba(201,150,58,.08);border-radius:6px;
+    padding:9px 11px;font-size:.82rem;color:var(--ink)}
+  .flags b{color:var(--warn);display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .flags ul{margin:0;padding-left:16px;color:var(--mut)}
+
+  /* Blocks + exercises */
+  .block-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-lt);
+    font-weight:700;margin:16px 0 2px}
+  .block-note{font-size:.78rem;color:var(--faint);margin-bottom:6px;font-style:italic}
+  .ex{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .ex:last-child{border-bottom:none}
+  .ex input[type=checkbox]{margin-top:3px;width:17px;height:17px;flex:none;accent-color:var(--ok);cursor:pointer}
+  .ex .nm{flex:1;min-width:0;cursor:pointer;font-size:.92rem}
+  .ex .pr{color:var(--mut);font-size:.84rem}
+  .ex.done .nm{color:var(--faint);text-decoration:line-through}
+  .ex .log{flex:none;width:88px}
+  .ex .log input{font-size:.78rem;padding:4px 6px;text-align:right}
+  .ex.todo .nm{color:var(--faint);font-style:italic}
+  .ex.todo{border-left:2px dashed var(--line);padding-left:9px;margin-left:-11px}
+
+  .notes{margin-top:14px}
+  .notes textarea{min-height:56px;resize:vertical}
+  .rowbtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  button.btn{background:var(--card2);border:1px solid var(--line);color:var(--mut);padding:6px 11px;
+    border-radius:6px;font:inherit;font-size:.78rem;cursor:pointer}
+  button.btn:hover{color:var(--ink);border-color:var(--faint)}
+  button.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+
+  footer{margin-top:26px;color:var(--faint);font-size:.78rem;border-top:1px solid var(--line);padding-top:14px}
+  footer p{margin:6px 0}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--card2);
+    border:1px solid var(--line);border-radius:8px;padding:9px 16px;font-size:.85rem;opacity:0;
+    pointer-events:none;transition:opacity .2s;z-index:99}
+  .toast.show{opacity:1}
+
+  @media print{
+    body{background:#fff;color:#000}
+    .tabs,.rowbtns,.toast,.caret{display:none}
+    .day-b{display:block!important}
+    .day,.readiness{border-color:#ccc;background:#fff;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Training</div>
+    <h1 id="title">Training Programme</h1>
+    <div class="sub" id="subtitle"></div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="lbl">Week</div><div class="num" id="s-week">—</div></div>
+    <div class="stat"><div class="lbl">Sessions done</div><div class="num" id="s-sessions">—</div></div>
+    <div class="stat"><div class="lbl">Week complete</div><div class="num" id="s-pct">—</div></div>
+    <div class="stat"><div class="lbl">Block</div><div class="num" id="s-block">—</div></div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="weekline" id="weekline"></div>
+  <div id="days"></div>
+
+  <div class="rowbtns">
+    <button class="btn" id="btn-print">Print this week</button>
+    <button class="btn" id="btn-export">Copy all logs</button>
+    <button class="btn" id="btn-reset">Clear this week</button>
+  </div>
+
+  <footer>
+    <p><b>The rule:</b> train the fresh things fresh — skill, speed, power, high coordination. Train the tolerant
+      things under fatigue — conditioning, carries, trunk. Remove anything that worsens pain, wrecks the next
+      session, or adds fatigue without transfer.</p>
+    <p>Ticks, loads, readiness and notes save to this browser only. Nothing leaves the device.</p>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================================
+   1. THE PROGRAMME — this is the only part you need to edit.
+
+   Days: mon/wed/fri = hard strength & conditioning. tue/thu = skill & stretch.
+   Each day has blocks; each block has items: { name, pr, todo }
+     name — the exercise
+     pr   — the prescription (sets x reps, time, tempo)
+     todo — true means "not written yet"; it renders greyed out and dashed.
+            Delete the todo flag once you have filled the exercise in.
+   ============================================================================ */
+
+const CONFIG = {
+  athlete:   "",                     // your name — leave "" to hide
+  title:     "Training Programme",
+  subtitle:  "Five days a week · Mon/Wed/Fri strength & conditioning · Tue/Thu skill & stretch",
+  startDate: "2026-08-31",           // Monday of Week 1 (yyyy-mm-dd)
+  target:    null,                   // e.g. { date:"2026-11-14", label:"Race day" } or null
+};
+
+/* Week-by-week intent. Add or remove weeks freely — tabs build themselves. */
+const WEEKS = [
+  { label:"Week 1", focus:"Groove the patterns",   note:"Nail positions and full range. Leave 2–3 reps in reserve on everything." },
+  { label:"Week 2", focus:"Build",                 note:"Same work, more quality. Add load only where last week was clean." },
+  { label:"Week 3", focus:"Build +",               note:"Top of the volume. Conditioning finish stays hard but controlled." },
+  { label:"Week 4", focus:"Deload",                note:"Cut working sets by roughly 40%. Keep the tendon work and the skill days in full." },
+  { label:"Week 5", focus:"Load",                  note:"Heaviest strength week. Cut reps, hold the intent, never grind to failure." },
+  { label:"Week 6", focus:"Express / retest",      note:"Volume down, sharpness up. No new exercises, no soreness." },
+];
+
+/* The five training days. */
+const DAY_PLAN = {
+
+  mon: { day:"Mon", type:"iron", name:"Strength & Conditioning — Session A", aim:"Hard day. Lower-body force, trunk and work capacity.", blocks:[
+    { label:"Tendon protocol — first, always", note:"Never skipped, never moved later in the session.", items:[
+      { name:"Spanish squat isometric", pr:"4 × 30–45s" },
+      { name:"Tempo goblet squat", pr:"3 × 6, 4s lower" },
+    ]},
+    { label:"Warm-up", items:[
+      { name:"CARs — ankle, hip, spine, shoulder", pr:"3–5 each, slow" },
+      { name:"90/90 switches", pr:"8 each side" },
+      { name:"Deep squat hold with pry", pr:"60s" },
+      { name:"Bear crawl", pr:"2 × 10m" },
+    ]},
+    { label:"Primer — fresh, before fatigue", note:"Power or speed intent. Short, sharp, fully recovered.", items:[
+      { name:"Your primer", pr:"to add", todo:true },
+    ]},
+    { label:"Group 1 — repeat twice", note:"Large movement · hold/neuro set · squat pattern · single-leg or trunk.", items:[
+      { name:"Large movement", pr:"to add", todo:true },
+      { name:"Hold / neuro set", pr:"to add", todo:true },
+      { name:"Squat pattern", pr:"to add", todo:true },
+      { name:"Single-leg / trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 2 — repeat twice", items:[
+      { name:"Large movement", pr:"to add", todo:true },
+      { name:"Hold / neuro set", pr:"to add", todo:true },
+      { name:"Hinge pattern", pr:"to add", todo:true },
+      { name:"Single-leg / trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 3 — repeat twice", items:[
+      { name:"Push", pr:"to add", todo:true },
+      { name:"Pull", pr:"to add", todo:true },
+      { name:"Carry", pr:"to add", todo:true },
+      { name:"Mobility filler", pr:"to add", todo:true },
+    ]},
+    { label:"Conditioning finish", note:"Only if it serves the goal. Quality drops, set ends.", items:[
+      { name:"Your conditioning piece", pr:"to add", todo:true },
+    ]},
+    { label:"Cooldown", items:[
+      { name:"Nasal breathing walk", pr:"3–5 min" },
+      { name:"90/90 breathing", pr:"5 breaths" },
+      { name:"Calf and hip flexor stretch", pr:"45s each side" },
+    ]},
+  ]},
+
+  tue: { day:"Tue", type:"skill", name:"Skill & Stretch", aim:"Low threat. Skill trained fresh, then range and recovery.", blocks:[
+    { label:"Skill — fresh, first", note:"Before any fatigue. Stop the set when quality drops, not when you are tired.", items:[
+      { name:"Skill drill 1", pr:"to add", todo:true },
+      { name:"Skill drill 2", pr:"to add", todo:true },
+      { name:"Skill drill 3", pr:"to add", todo:true },
+    ]},
+    { label:"CARs — controlled, not casual", items:[
+      { name:"Ankle CARs", pr:"5 each side" },
+      { name:"Hip CARs", pr:"5 each side" },
+      { name:"Spine / thoracic rotations", pr:"8 each side" },
+      { name:"Shoulder CARs", pr:"5 each side" },
+    ]},
+    { label:"Yoga flow — 15 min", note:"Nasal breathing. Link breath to movement. Never force painful range.", items:[
+      { name:"Crocodile breathing", pr:"1 min" },
+      { name:"Cat-cow", pr:"8 reps" },
+      { name:"Thread the needle", pr:"6 each side" },
+      { name:"Downward dog pedal", pr:"10 each side" },
+      { name:"Low lunge with glute squeeze", pr:"45s each side" },
+      { name:"Half split hamstring flow", pr:"6 each side" },
+      { name:"90/90 switches", pr:"8 each side" },
+      { name:"Deep squat pry", pr:"60s" },
+      { name:"Child's pose reach", pr:"60s" },
+    ]},
+    { label:"Tendon maintenance — light", note:"Low load, high consistency. This is the insurance policy.", items:[
+      { name:"Standing calf isometric", pr:"3 × 30s" },
+      { name:"Long-lever bridge", pr:"3 × 30s" },
+      { name:"Adductor squeeze", pr:"3 × 20s" },
+    ]},
+    { label:"Downregulate", items:[
+      { name:"Legs up the wall", pr:"2 min" },
+      { name:"90/90 breathing", pr:"5 breaths" },
+    ]},
+  ]},
+
+  wed: { day:"Wed", type:"iron", name:"Strength & Conditioning — Session B", aim:"Hard day. Upper-body strength, hinge and midline.", blocks:[
+    { label:"Tendon protocol — first, always", items:[
+      { name:"Spanish squat isometric", pr:"4 × 30–45s" },
+      { name:"Tempo goblet squat", pr:"3 × 6, 4s lower" },
+    ]},
+    { label:"Warm-up", items:[
+      { name:"CARs — ankle, hip, spine, shoulder", pr:"3–5 each, slow" },
+      { name:"Scap press-ups and scap pull-ups", pr:"10 each" },
+      { name:"Dowel hinge", pr:"10 reps" },
+      { name:"Dead hang", pr:"2 × 20s" },
+    ]},
+    { label:"Primer — fresh, before fatigue", items:[
+      { name:"Your primer", pr:"to add", todo:true },
+    ]},
+    { label:"Group 1 — repeat twice", items:[
+      { name:"Large movement", pr:"to add", todo:true },
+      { name:"Hold / neuro set", pr:"to add", todo:true },
+      { name:"Hinge pattern", pr:"to add", todo:true },
+      { name:"Single-leg / trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 2 — repeat twice", items:[
+      { name:"Vertical press", pr:"to add", todo:true },
+      { name:"Vertical pull", pr:"to add", todo:true },
+      { name:"Shoulder stability", pr:"to add", todo:true },
+      { name:"Trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 3 — repeat twice", items:[
+      { name:"Horizontal press", pr:"to add", todo:true },
+      { name:"Row", pr:"to add", todo:true },
+      { name:"Carry", pr:"to add", todo:true },
+      { name:"Mobility filler", pr:"to add", todo:true },
+    ]},
+    { label:"Conditioning finish", items:[
+      { name:"Your conditioning piece", pr:"to add", todo:true },
+    ]},
+    { label:"Cooldown", items:[
+      { name:"Nasal breathing walk", pr:"3–5 min" },
+      { name:"Child's pose reach", pr:"60s" },
+      { name:"90/90 breathing", pr:"5 breaths" },
+    ]},
+  ]},
+
+  thu: { day:"Thu", type:"skill", name:"Skill & Stretch", aim:"Low threat. Skill fresh, then range, tissue and reset.", blocks:[
+    { label:"Skill — fresh, first", items:[
+      { name:"Skill drill 1", pr:"to add", todo:true },
+      { name:"Skill drill 2", pr:"to add", todo:true },
+      { name:"Skill drill 3", pr:"to add", todo:true },
+    ]},
+    { label:"CARs — controlled, not casual", items:[
+      { name:"Ankle CARs", pr:"5 each side" },
+      { name:"Hip CARs", pr:"5 each side" },
+      { name:"Spine / thoracic rotations", pr:"8 each side" },
+      { name:"Shoulder CARs", pr:"5 each side" },
+    ]},
+    { label:"Stretch — pre-stretch then strengthen", note:"Take the range, then own it. A stretch you cannot control is not yours yet.", items:[
+      { name:"Hip flexor stretch → glute bridge hold", pr:"45s → 30s each side" },
+      { name:"Hamstring half split → long-lever bridge", pr:"45s → 30s each side" },
+      { name:"Lizard pose → 90/90 lift-off", pr:"45s → 8 each side" },
+      { name:"Puppy pose → prone Y raise", pr:"45s → 10 reps" },
+      { name:"Ankle rocks → tibialis raise", pr:"10 each → 15 reps" },
+    ]},
+    { label:"Tendon maintenance — light", items:[
+      { name:"Soleus isometric", pr:"3 × 30s" },
+      { name:"Copenhagen regression", pr:"3 × 20s each side" },
+      { name:"Slider curl or bridge walk-out", pr:"3 × 8" },
+    ]},
+    { label:"Downregulate", items:[
+      { name:"Legs up the wall", pr:"2 min" },
+      { name:"Crocodile breathing", pr:"2 min" },
+    ]},
+  ]},
+
+  fri: { day:"Fri", type:"iron", name:"Strength & Conditioning — Session C", aim:"Hard day. Full body, power intent, work capacity finish.", blocks:[
+    { label:"Tendon protocol — first, always", items:[
+      { name:"Spanish squat isometric", pr:"4 × 30–45s" },
+      { name:"Tempo goblet squat", pr:"3 × 6, 4s lower" },
+    ]},
+    { label:"Warm-up", items:[
+      { name:"CARs — ankle, hip, spine, shoulder", pr:"3–5 each, slow" },
+      { name:"Ankle rocks and calf raises", pr:"12 each" },
+      { name:"Hip aeroplanes", pr:"6 each side" },
+      { name:"Bear crawl and leopard crawl", pr:"2 × 10m" },
+    ]},
+    { label:"Primer — power, fully fresh", note:"Highest intent work of the week. Full recovery between efforts.", items:[
+      { name:"Your power primer", pr:"to add", todo:true },
+    ]},
+    { label:"Group 1 — repeat twice", items:[
+      { name:"Large movement", pr:"to add", todo:true },
+      { name:"Hold / neuro set", pr:"to add", todo:true },
+      { name:"Squat pattern", pr:"to add", todo:true },
+      { name:"Single-leg / trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 2 — repeat twice", items:[
+      { name:"Large movement", pr:"to add", todo:true },
+      { name:"Hold / neuro set", pr:"to add", todo:true },
+      { name:"Push or pull", pr:"to add", todo:true },
+      { name:"Trunk", pr:"to add", todo:true },
+    ]},
+    { label:"Group 3 — repeat twice", items:[
+      { name:"Carry", pr:"to add", todo:true },
+      { name:"Lateral / rotational", pr:"to add", todo:true },
+      { name:"Grip or shoulder stability", pr:"to add", todo:true },
+      { name:"Mobility filler", pr:"to add", todo:true },
+    ]},
+    { label:"Conditioning finish", note:"End the week tired, not broken. Nothing that costs you the weekend.", items:[
+      { name:"Your conditioning piece", pr:"to add", todo:true },
+    ]},
+    { label:"Cooldown", items:[
+      { name:"Nasal breathing walk", pr:"5 min" },
+      { name:"Full yoga flow (short version)", pr:"8 min" },
+      { name:"Legs up the wall", pr:"2 min" },
+    ]},
+  ]},
+};
+
+/* Per-week overrides. Replace any day in any week without touching DAY_PLAN.
+   Example:
+     const OVERRIDES = { 3: { mon: { day:"Mon", type:"iron", name:"Deload A", aim:"...", blocks:[...] } } };
+   The key is the week index, counting from 0 (so 3 = Week 4).                */
+const OVERRIDES = {};
+
+/* Pain-based swaps. Shown automatically when a joint is marked sore. */
+const SWAPS = {
+  knee: ["Sprints and jumps → bike intervals or sled push", "Deep squats → box squat or Spanish squat hold",
+         "Lunges → split squat isometric or step-up", "Keep the tendon isometrics in — they usually help"],
+  achilles: ["Pogos and bounds → calf isometrics", "Hard shuttles → Zone 2 bike",
+             "Accelerations → wall drills", "Reduce range before reducing load"],
+  hamstring: ["Max sprinting → wall drills and A-marches", "Nordics → hamstring bridge",
+              "Full RDL → reduced-range RDL", "Bounds → carries and trunk work"],
+};
+
+/* ============================================================================
+   2. THE APP — no need to edit below here.
+   ============================================================================ */
+
+const DAY_KEYS = ["mon","tue","wed","thu","fri"];
+const STORE = "training.v1";
+const $ = (id) => document.getElementById(id);
+
+let state = load();
+let week = currentWeek();
+
+function load(){
+  try { return JSON.parse(localStorage.getItem(STORE)) || {}; }
+  catch (e) { return {}; }
+}
+function save(){
+  try { localStorage.setItem(STORE, JSON.stringify(state)); }
+  catch (e) { /* private browsing — the page still works, it just will not remember */ }
+}
+function entry(w, d){
+  state[w] = state[w] || {};
+  state[w][d] = state[w][d] || { done:{}, log:{}, note:"", readiness:{} };
+  return state[w][d];
+}
+function planFor(w, d){
+  return (OVERRIDES[w] && OVERRIDES[w][d]) || DAY_PLAN[d];
+}
+function weekStart(w){
+  const d = new Date(CONFIG.startDate + "T00:00:00");
+  d.setDate(d.getDate() + w * 7);
+  return d;
+}
+function currentWeek(){
+  const diff = Math.floor((new Date() - weekStart(0)) / 6048e5);
+  return Math.max(0, Math.min(WEEKS.length - 1, diff));
+}
+function dateOf(w, dayKey){
+  const d = weekStart(w);
+  d.setDate(d.getDate() + DAY_KEYS.indexOf(dayKey));
+  return d;
+}
+function isToday(date){
+  const n = new Date();
+  return date.toDateString() === n.toDateString();
+}
+function fmt(d){
+  return d.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+}
+function counts(w, d){
+  const plan = planFor(w, d), e = entry(w, d);
+  let total = 0, done = 0;
+  plan.blocks.forEach((b, bi) => b.items.forEach((_, ii) => {
+    total++; if (e.done[bi + "-" + ii]) done++;
+  }));
+  return { total, done, pct: total ? Math.round(done / total * 100) : 0 };
+}
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function renderHead(){
+  $("title").textContent = CONFIG.title;
+  $("eyebrow").textContent = CONFIG.athlete ? CONFIG.athlete : "Training";
+  $("subtitle").textContent = CONFIG.subtitle;
+  document.title = CONFIG.title;
+}
+
+function renderStats(){
+  let done = 0, total = 0, sessions = 0;
+  DAY_KEYS.forEach(d => {
+    const c = counts(week, d);
+    done += c.done; total += c.total;
+    if (c.total && c.done === c.total) sessions++;
+  });
+  $("s-week").innerHTML = (week + 1) + " <small>of " + WEEKS.length + "</small>";
+  $("s-sessions").innerHTML = sessions + " <small>of 5</small>";
+  $("s-pct").innerHTML = (total ? Math.round(done / total * 100) : 0) + "<small>%</small>";
+  if (CONFIG.target){
+    const days = Math.ceil((new Date(CONFIG.target.date) - new Date()) / 864e5);
+    $("s-block").innerHTML = days + " <small>days to " + CONFIG.target.label + "</small>";
+  } else {
+    let all = 0;
+    WEEKS.forEach((_, w) => DAY_KEYS.forEach(d => { if (counts(w, d).done) all++; }));
+    $("s-block").innerHTML = all + " <small>day" + (all === 1 ? "" : "s") + " trained</small>";
+  }
+}
+
+function renderTabs(){
+  const tabs = $("tabs");
+  tabs.innerHTML = "";
+  WEEKS.forEach((w, i) => {
+    const complete = DAY_KEYS.every(d => { const c = counts(i, d); return c.total && c.done === c.total; });
+    const b = document.createElement("button");
+    b.className = "tab" + (i === week ? " active" : "");
+    b.innerHTML = w.label + (complete ? '<span class="dot"></span>' : "");
+    b.onclick = () => { week = i; render(); window.scrollTo({ top:0, behavior:"smooth" }); };
+    tabs.appendChild(b);
+  });
+  const w = WEEKS[week];
+  $("weekline").innerHTML = "<b>" + w.focus + "</b> · week beginning " + fmt(weekStart(week)) +
+    (w.note ? " — " + w.note : "");
+}
+
+function renderDays(){
+  const host = $("days");
+  host.innerHTML = "";
+  DAY_KEYS.forEach(dk => host.appendChild(dayCard(dk)));
+}
+
+function dayCard(dk){
+  const plan = planFor(week, dk), e = entry(week, dk), c = counts(week, dk);
+  const date = dateOf(week, dk), today = isToday(date);
+
+  const card = document.createElement("section");
+  card.className = "day" + (today ? " today open" : "");
+
+  const head = document.createElement("div");
+  head.className = "day-h";
+  head.innerHTML =
+    '<div class="chip ' + plan.type + '">' + plan.day + '</div>' +
+    '<div class="day-t"><h2>' + plan.name + '</h2><div class="aim">' + fmt(date) + ' · ' + plan.aim + '</div></div>' +
+    '<div class="day-pct">' + c.done + '/' + c.total + '</div>' +
+    '<div class="caret">›</div>';
+  head.onclick = () => card.classList.toggle("open");
+  card.appendChild(head);
+
+  const bar = document.createElement("div");
+  bar.className = "progress";
+  bar.innerHTML = '<div style="width:' + c.pct + '%"></div>';
+  card.appendChild(bar);
+
+  const body = document.createElement("div");
+  body.className = "day-b";
+  body.appendChild(readinessBox(dk, e));
+
+  plan.blocks.forEach((b, bi) => {
+    const lab = document.createElement("div");
+    lab.className = "block-label";
+    lab.textContent = b.label;
+    body.appendChild(lab);
+    if (b.note){
+      const n = document.createElement("div");
+      n.className = "block-note";
+      n.textContent = b.note;
+      body.appendChild(n);
+    }
+    b.items.forEach((it, ii) => body.appendChild(exRow(dk, e, bi, ii, it, card)));
+  });
+
+  const notes = document.createElement("div");
+  notes.className = "notes";
+  const ta = document.createElement("textarea");
+  ta.placeholder = "What improved · what hurt · what to progress · what to avoid next time";
+  ta.value = e.note || "";
+  ta.oninput = () => { e.note = ta.value; save(); };
+  notes.appendChild(ta);
+  body.appendChild(notes);
+
+  card.appendChild(body);
+  return card;
+}
+
+function readinessBox(dk, e){
+  const box = document.createElement("div");
+  box.className = "readiness";
+  box.innerHTML = '<div class="rl">Readiness — answer before you start</div>';
+
+  const grid = document.createElement("div");
+  grid.className = "rgrid";
+  const fields = [
+    { k:"knee",      label:"Knee",      opts:["OK","Niggle","Sore"] },
+    { k:"achilles",  label:"Achilles",  opts:["OK","Niggle","Sore"] },
+    { k:"hamstring", label:"Hamstring", opts:["OK","Niggle","Sore"] },
+    { k:"energy",    label:"Energy",    opts:["Good","Flat","Empty"] },
+    { k:"sleep",     label:"Sleep",     opts:["7h+","5–7h","Under 5h"] },
+  ];
+  const flags = document.createElement("div");
+
+  fields.forEach(f => {
+    const cell = document.createElement("div");
+    cell.innerHTML = "<label>" + f.label + "</label>";
+    const sel = document.createElement("select");
+    sel.innerHTML = '<option value="">—</option>' + f.opts.map(o => '<option>' + o + '</option>').join("");
+    sel.value = e.readiness[f.k] || "";
+    const paint = () => {
+      sel.className = sel.value === "Sore" || sel.value === "Empty" || sel.value === "Under 5h" ? "bad"
+                    : sel.value === "Niggle" || sel.value === "Flat" || sel.value === "5–7h" ? "warn" : "";
+    };
+    paint();
+    sel.onchange = () => { e.readiness[f.k] = sel.value; paint(); save(); renderFlags(flags, e); };
+    cell.appendChild(sel);
+    grid.appendChild(cell);
+  });
+
+  box.appendChild(grid);
+  renderFlags(flags, e);
+  box.appendChild(flags);
+  return box;
+}
+
+function renderFlags(host, e){
+  const sore = Object.keys(SWAPS).filter(k => e.readiness[k] === "Sore");
+  if (!sore.length){ host.innerHTML = ""; return; }
+  host.className = "flags";
+  host.innerHTML = "<b>Sore — change the session</b><ul>" +
+    sore.flatMap(k => SWAPS[k].map(s => "<li>" + s + "</li>")).join("") +
+    "</ul>";
+}
+
+function exRow(dk, e, bi, ii, it, card){
+  const id = bi + "-" + ii;
+  const row = document.createElement("div");
+  row.className = "ex" + (e.done[id] ? " done" : "") + (it.todo ? " todo" : "");
+
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = !!e.done[id];
+
+  const nm = document.createElement("div");
+  nm.className = "nm";
+  nm.innerHTML = it.name + (it.pr ? ' <span class="pr">— ' + it.pr + '</span>' : "");
+
+  const logWrap = document.createElement("div");
+  logWrap.className = "log";
+  const log = document.createElement("input");
+  log.type = "text";
+  log.placeholder = "log";
+  log.value = e.log[id] || "";
+  log.oninput = () => { e.log[id] = log.value; save(); };
+  logWrap.appendChild(log);
+
+  const toggle = () => {
+    e.done[id] = !e.done[id];
+    cb.checked = !!e.done[id];
+    row.classList.toggle("done", !!e.done[id]);
+    save();
+    refreshCard(dk, card);
+    renderStats();
+    renderTabs();
+  };
+  cb.onchange = toggle;
+  nm.onclick = toggle;
+
+  row.append(cb, nm, logWrap);
+  return row;
+}
+
+function refreshCard(dk, card){
+  const c = counts(week, dk);
+  card.querySelector(".day-pct").textContent = c.done + "/" + c.total;
+  card.querySelector(".progress > div").style.width = c.pct + "%";
+}
+
+function render(){
+  renderHead();
+  renderStats();
+  renderTabs();
+  renderDays();
+}
+
+$("btn-print").onclick = () => window.print();
+
+$("btn-export").onclick = () => {
+  const lines = [];
+  WEEKS.forEach((w, wi) => {
+    DAY_KEYS.forEach(dk => {
+      const e = (state[wi] || {})[dk];
+      if (!e) return;
+      const c = counts(wi, dk);
+      if (!c.done && !e.note) return;
+      const plan = planFor(wi, dk);
+      lines.push(w.label + " — " + plan.day + " — " + plan.name + " (" + c.done + "/" + c.total + ")");
+      const r = Object.entries(e.readiness).filter(([, v]) => v);
+      if (r.length) lines.push("  Readiness: " + r.map(([k, v]) => k + " " + v).join(", "));
+      plan.blocks.forEach((b, bi) => b.items.forEach((it, ii) => {
+        const id = bi + "-" + ii;
+        if (e.done[id] || e.log[id]) lines.push("  " + (e.done[id] ? "x" : "-") + " " + it.name +
+          (e.log[id] ? " — " + e.log[id] : ""));
+      }));
+      if (e.note) lines.push("  Notes: " + e.note);
+      lines.push("");
+    });
+  });
+  const text = lines.join("\n") || "Nothing logged yet.";
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(() => toast("Logs copied to clipboard"),
+                                             () => toast("Could not copy — check browser permissions"));
+  } else {
+    toast("Clipboard unavailable in this browser");
+  }
+};
+
+$("btn-reset").onclick = () => {
+  if (!confirm("Clear all ticks, logs and notes for " + WEEKS[week].label + "?")) return;
+  delete state[week];
+  save();
+  render();
+  toast(WEEKS[week].label + " cleared");
+};
+
+render();
+</script>
+</body>
+</html>
