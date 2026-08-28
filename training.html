@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Training Programme</title>
+<title>Five-Day Training Block</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
   :root{
     --bg:#0f1113; --card:#171a1d; --card2:#1d2126; --line:#262b30;
@@ -13,19 +16,22 @@
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased}
+  .disp{font-family:'Archivo','IBM Plex Sans',system-ui,sans-serif;letter-spacing:-.015em}
   .wrap{max-width:860px;margin:0 auto;padding:22px 16px 90px}
 
   /* Header */
   header{margin-bottom:18px}
   .eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-lt);font-weight:700}
-  h1{font-size:1.6rem;margin:4px 0 2px;letter-spacing:-.01em}
+  h1{font-family:'Archivo','IBM Plex Sans',system-ui,sans-serif;font-size:1.6rem;margin:4px 0 2px;
+    letter-spacing:-.02em;font-weight:800;text-wrap:balance}
   .sub{color:var(--mut);font-size:.9rem}
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0 18px}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px}
   .stat .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:700}
-  .stat .num{font-size:1.5rem;font-weight:700;margin-top:2px;letter-spacing:-.02em}
+  .stat .num{font-family:'Archivo','IBM Plex Sans',system-ui,sans-serif;font-size:1.5rem;font-weight:800;
+    margin-top:2px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
   .stat .num small{font-size:.8rem;color:var(--mut);font-weight:500}
 
   /* Week tabs */
@@ -46,9 +52,11 @@
   .chip.iron{background:rgba(177,23,34,.16);color:var(--accent-lt);border:1px solid rgba(177,23,34,.35)}
   .chip.skill{background:rgba(63,174,107,.12);color:var(--ok);border:1px solid rgba(63,174,107,.3)}
   .day-t{flex:1;min-width:0}
-  .day-t h2{font-size:1.02rem;margin:0;font-weight:650}
+  .day-t h2{font-family:'Archivo','IBM Plex Sans',system-ui,sans-serif;font-size:1.04rem;margin:0;
+    font-weight:700;letter-spacing:-.01em;text-wrap:balance}
   .day-t .aim{color:var(--mut);font-size:.83rem;margin-top:1px}
-  .day-pct{flex:none;color:var(--faint);font-size:.78rem;font-variant-numeric:tabular-nums;padding-top:3px}
+  .day-pct{flex:none;color:var(--faint);font-size:.78rem;font-variant-numeric:tabular-nums;padding-top:4px;
+    font-family:'Archivo','IBM Plex Sans',system-ui,sans-serif;font-weight:600}
   .caret{flex:none;color:var(--faint);font-size:.8rem;transition:transform .18s;padding-top:3px}
   .day.open .caret{transform:rotate(90deg)}
   .progress{height:3px;background:var(--line)}
@@ -113,7 +121,7 @@
 <div class="wrap">
   <header>
     <div class="eyebrow" id="eyebrow">Training</div>
-    <h1 id="title">Training Programme</h1>
+    <h1 id="title">Five-Day Training Block</h1>
     <div class="sub" id="subtitle"></div>
   </header>
 
@@ -157,7 +165,7 @@
 
 const CONFIG = {
   athlete:   "",                     // your name — leave "" to hide
-  title:     "Training Programme",
+  title:     "Five-Day Training Block",
   subtitle:  "Five days a week · Mon/Wed/Fri strength & conditioning · Tue/Thu skill & stretch",
   startDate: "2026-08-31",           // Monday of Week 1 (yyyy-mm-dd)
   target:    null,                   // e.g. { date:"2026-11-14", label:"Race day" } or null
