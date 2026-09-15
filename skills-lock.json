@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "mempalace": {
+      "source": "milla-jovovich/mempalace",
+      "sourceType": "github",
+      "skillPath": "skills/mempalace/SKILL.md",
+      "computedHash": "9644803c3cdc21ec3f24b32bb9112da619761bd115fdc1140d5a37da610d1cda"
+    }
+  }
+}
