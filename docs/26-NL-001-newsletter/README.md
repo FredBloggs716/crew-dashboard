@@ -31,6 +31,24 @@ values, percentages). Loaded from Google Fonts with system fallbacks.
 Dark mode is supported at token level — bare `:root` carries the full light
 palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
 
+## Detail recovered for this issue
+
+- **194 Church Street** — Upwey, Weymouth DT3 5QE. Retaining wall for Jennifer
+  Taylor, start 6 July 2026 (RAMS issued 30 July). Balance invoiced 16 Sep 2026,
+  hence "closing out" on the page.
+- **Silver Cranes** — The Silver Crane Co Ltd, retaining wall behind Units 1–2
+  Innovation Close, Poole. CA Bennington Green. Starts Mon 21 Sep.
+- **Timbertoft** — Hensting Lane, Fishers Pond, Hampshire. SIPs new build for
+  Ecologic Developments; engineer AWA; architect Jon Dale Architect Ltd.
+  Note the AWA title block spells it **"Timberloft"** while every other document
+  and the client say **Timbertoft** — worth resolving.
+- **Drawing** — `assets/timbertoft-drawing.png`, rendered with PyMuPDF from AWA
+  drawing 15221-001 rev P2 (Foundation GA, June 2026) and cropped to the plan.
+  The sheet is stamped **preliminary, not for construction**; the caption says so
+  and the stamp is left visible in the crop.
+- **Pools** — 400+ closedowns is the client's own figure. No supporting record
+  was found in Gmail, Drive or Notion.
+
 ## Sources
 
 - Notion **Projects** register (`LG Howson Operations Hub / Projects`) — status,
