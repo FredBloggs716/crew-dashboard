@@ -1,0 +1,490 @@
+<title>LGH Site Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crimson:#B11722; --crimson-dk:#8E1019; --crimson-tint:#FBEAEB;
+    --ink:#16191C; --steel:#23272B; --mute:#6B7177;
+    --line:#E4E7EA; --bg:#F4F6F8; --card:#FFFFFF; --band:#16191C;
+    --green:#1E8E4A; --green-tint:#E6F4EC;
+    --amber:#B7791F; --amber-tint:#FBF1DC;
+    --blue:#1F5FB2; --blue-tint:#E7F0FB;
+    --rule:#E4E7EA; --track:#ECEFF2;
+    --shadow:0 1px 2px rgba(16,25,28,.05),0 8px 24px rgba(16,25,28,.07);
+    --on-band:#FFFFFF; --on-band-mute:#9AA0A6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --crimson:#E23845; --crimson-dk:#F26B75; --crimson-tint:#2E1114;
+      --ink:#F2F4F6; --steel:#D4D8DC; --mute:#9199A1;
+      --line:#2B3137; --bg:#0F1214; --card:#171B1F; --band:#000000;
+      --green:#49C07A; --green-tint:#12261A;
+      --amber:#D9A23C; --amber-tint:#2B2213;
+      --blue:#5B9BE8; --blue-tint:#121F2E;
+      --rule:#2B3137; --track:#242A30;
+      --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.45);
+      --on-band:#FFFFFF; --on-band-mute:#8C939A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --crimson:#E23845; --crimson-dk:#F26B75; --crimson-tint:#2E1114;
+    --ink:#F2F4F6; --steel:#D4D8DC; --mute:#9199A1;
+    --line:#2B3137; --bg:#0F1214; --card:#171B1F; --band:#000000;
+    --green:#49C07A; --green-tint:#12261A;
+    --amber:#D9A23C; --amber-tint:#2B2213;
+    --blue:#5B9BE8; --blue-tint:#121F2E;
+    --rule:#2B3137; --track:#242A30;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.45);
+    --on-band:#FFFFFF; --on-band-mute:#8C939A;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--steel);
+    font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.disp{font-family:'Archivo','Archivo Black',system-ui,sans-serif;letter-spacing:-.015em;color:var(--ink);margin:0;text-wrap:balance}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  p{margin:0}
+  img{max-width:100%;display:block}
+  a{color:var(--crimson)}
+
+  .wrap{max-width:940px;margin:0 auto;padding-inline:20px}
+
+  /* ---------- Masthead ---------- */
+  .masthead{background:var(--band);color:var(--on-band);padding-block:22px 20px;border-bottom:4px solid var(--crimson)}
+  .mast-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .mast-mark{width:46px;height:46px;flex:none;border-radius:8px;overflow:hidden;background:#B11722}
+  .mast-mark img{width:100%;height:100%;object-fit:contain}
+  .mast-id{flex:1;min-width:180px}
+  .mast-id h1{color:#fff;font-size:26px;font-weight:800;line-height:1.05}
+  .mast-id .sub{color:var(--on-band-mute);font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;margin-top:5px}
+  .mast-meta{text-align:right;font-size:12.5px;color:var(--on-band-mute);line-height:1.5}
+  .mast-meta .issue{display:inline-block;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);
+    border-radius:999px;padding:5px 12px;color:#fff;font-weight:600;font-size:12px;letter-spacing:.04em}
+  .mast-meta .dates{margin-top:7px}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;background:var(--band)}
+  .hero figure{margin:0;position:relative;aspect-ratio:2048/1365;max-height:440px;overflow:hidden;background:#0c0e10}
+  .hero figure img{width:100%;height:100%;object-fit:cover;opacity:.95}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,14,.94) 0%,rgba(10,12,14,.55) 38%,rgba(10,12,14,.08) 78%)}
+  .hero-copy{position:absolute;left:0;right:0;bottom:0;padding-block:0 26px}
+  .hero-copy .kicker{display:inline-block;background:var(--crimson);color:#fff;font-family:'Archivo',sans-serif;
+    font-weight:700;font-size:11px;letter-spacing:.11em;text-transform:uppercase;padding:5px 10px;border-radius:4px}
+  .hero-copy h2{color:#fff;font-size:clamp(25px,5.4vw,42px);font-weight:800;line-height:1.08;margin-top:12px;max-width:19ch}
+  .hero-copy .stand{color:#D7DBDE;font-size:15px;margin-top:11px;max-width:56ch}
+  figcaption.credit{font-size:11.5px;color:var(--mute);padding-block:8px;font-style:italic}
+
+  /* ---------- Stat strip ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin-top:26px;box-shadow:var(--shadow)}
+  .stat{background:var(--card);padding:16px 18px 18px}
+  .stat .lbl{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+  .stat .num{font-family:'Archivo',sans-serif;font-weight:800;font-size:33px;line-height:1.08;margin-top:7px;color:var(--crimson);font-variant-numeric:tabular-nums}
+  .stat .foot{font-size:12px;color:var(--mute);margin-top:3px}
+  .stat.g .num{color:var(--green)} .stat.b .num{color:var(--blue)} .stat.a .num{color:var(--amber)}
+
+  /* ---------- Section headers ---------- */
+  section{padding-block:40px 0}
+  .sec-head{border-top:3px solid var(--crimson);padding-top:14px;margin-bottom:22px}
+  .sec-head .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--crimson)}
+  .sec-head h3{font-size:clamp(21px,3.4vw,27px);font-weight:800;margin-top:5px}
+  .sec-head .intro{font-size:14.5px;color:var(--mute);margin-top:7px;max-width:64ch}
+
+  /* ---------- Signed off (ledger rows) ---------- */
+  .ledger{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+  .lrow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:17px 18px;border-bottom:1px solid var(--rule)}
+  .lrow:last-child{border-bottom:0}
+  .tick{width:24px;height:24px;border-radius:50%;background:var(--green-tint);color:var(--green);display:grid;place-items:center;flex:none;margin-top:2px}
+  .tick svg{width:13px;height:13px}
+  .lrow h4{font-size:16.5px;font-weight:700}
+  .lrow .meta{font-size:12.5px;color:var(--mute);margin-top:2px}
+  .lrow .desc{font-size:14px;margin-top:7px;max-width:58ch}
+
+  /* ---------- On site now ---------- */
+  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:16px}
+  .job{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:11px}
+  .job.lead{grid-column:1/-1;border-left:4px solid var(--crimson)}
+  .job-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .job h4{font-size:17px;font-weight:700}
+  .job .client{font-size:12.5px;color:var(--mute);margin-top:2px}
+  .chip{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .chip.live{background:var(--green-tint);color:var(--green)}
+  .chip.new{background:var(--blue-tint);color:var(--blue)}
+  .chip.roll{background:var(--amber-tint);color:var(--amber)}
+  .job .body{font-size:14px;max-width:62ch}
+  .facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--mute);margin-top:auto;padding-top:4px}
+  .facts b{color:var(--steel);font-weight:600}
+  .prog{margin-top:6px}
+  .prog-lbl{display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--mute);margin-bottom:5px}
+  .prog-lbl .pct{font-family:'IBM Plex Mono',monospace;color:var(--crimson);font-variant-numeric:tabular-nums}
+  .bar{height:7px;border-radius:4px;background:var(--track);overflow:hidden}
+  .bar span{display:block;height:100%;border-radius:4px;background:var(--crimson)}
+
+  .also{margin-top:16px;background:var(--card);border:1px dashed var(--rule);border-radius:12px;padding:16px 18px}
+  .also .h{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+  .also .list{font-size:13.5px;margin-top:8px;color:var(--steel)}
+
+  /* ---------- Coming up (timeline rail) ---------- */
+  .rail{position:relative;margin-left:8px;padding-left:26px}
+  .rail::before{content:"";position:absolute;left:0;top:7px;bottom:10px;width:2px;background:var(--rule)}
+  .stop{position:relative;padding-bottom:22px}
+  .stop:last-child{padding-bottom:4px}
+  .stop::before{content:"";position:absolute;left:-31px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--card);border:2.5px solid var(--crimson)}
+  .stop.soft::before{border-color:var(--mute)}
+  .stop .when{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--crimson)}
+  .stop.soft .when{color:var(--mute)}
+  .stop h4{font-size:16px;font-weight:700;margin-top:3px}
+  .stop .d{font-size:13.5px;color:var(--mute);margin-top:3px;max-width:60ch}
+
+  /* ---------- Drawing ---------- */
+  .drawing{margin-top:16px;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+  .drawing img{width:100%;display:block}
+  .drawing .cap{background:var(--card);padding:11px 16px;font-size:12.5px;color:var(--mute);border-top:1px solid var(--rule)}
+  .drawing .cap b{color:var(--steel);font-weight:600}
+
+  /* ---------- Pools ---------- */
+  .pools{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--rule);
+    border-left:4px solid var(--blue);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow);flex-wrap:wrap}
+  .pools .p-num{font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(46px,9vw,62px);line-height:1;
+    color:var(--blue);flex:none;font-variant-numeric:tabular-nums}
+  .pools .p-body{flex:1;min-width:220px}
+  .pools .p-lead{font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;color:var(--ink)}
+  .pools .p-sub{font-size:14px;color:var(--steel);margin-top:6px;max-width:58ch}
+
+  /* ---------- Photo band ---------- */
+  .band-photo{margin-top:32px;border-radius:12px;overflow:hidden;border:1px solid var(--rule);box-shadow:var(--shadow)}
+  .band-photo img{width:100%;aspect-ratio:2200/1015;object-fit:cover}
+  .band-photo .cap{background:var(--card);padding:11px 16px;font-size:12.5px;color:var(--mute)}
+  .band-photo .cap b{color:var(--steel);font-weight:600}
+
+  /* ---------- New kit ---------- */
+  .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:16px}
+  .kit-item{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+  .kit-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:#fff;background:var(--crimson);padding:3px 9px;border-radius:4px}
+  .kit-item h4{font-size:17px;font-weight:700;margin-top:11px}
+  .kit-item p{font-size:14px;margin-top:8px;max-width:52ch}
+
+  /* ---------- Footer ---------- */
+  footer{margin-top:48px;background:var(--band);color:var(--on-band-mute);padding-block:26px 30px}
+  .foot-row{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .foot-logo{display:flex;align-items:center;gap:12px}
+  .foot-logo img{width:38px;height:38px;object-fit:contain;border-radius:6px}
+  .foot-logo .n{color:#fff;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;line-height:1.2}
+  .foot-logo .t{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+  .foot-meta{font-size:12px;line-height:1.7;text-align:right}
+  .foot-meta .src{color:#6F767D}
+
+  @media (max-width:600px){
+    .mast-meta{text-align:left}
+    .foot-meta{text-align:left}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .bar span{transition:width .6s ease}
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap mast-row">
+    <div class="mast-mark"><img src="assets/lgh-mark.png" alt="LG Howson Ltd mark"></div>
+    <div class="mast-id">
+      <h1>Site Report</h1>
+      <div class="sub">LG Howson Ltd &middot; Groundworks &amp; Civil Engineering</div>
+    </div>
+    <div class="mast-meta">
+      <span class="issue">Issue 01 &middot; Autumn 2026</span>
+      <div class="dates">Period covered: 17 July – 16 September 2026</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <figure>
+    <img src="assets/aerial-site.jpg" alt="LG Howson tracked excavator on a new-build site, block and beam floor part-laid with scaffolding erected around the perimeter">
+    <div class="scrim"></div>
+  </figure>
+  <div class="hero-copy">
+    <div class="wrap">
+      <span class="kicker">Two months on site</span>
+      <h2>Five jobs on the go, two more starting, and 400 pools to shut down</h2>
+      <p class="stand">West Street broke ground Monday, Silver Cranes goes in on the 21st, and Timbertoft and Benham are away before October. Pool closedown season starts alongside it. Here is where we are at.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <figcaption class="credit">Own plant on site — block and beam floor going in, scaffold up to the perimeter.</figcaption>
+
+  <div class="stats">
+    <div class="stat g">
+      <div class="lbl">Jobs on the go</div>
+      <div class="num">5</div>
+      <div class="foot">crews out every day</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">Starting this month</div>
+      <div class="num">2</div>
+      <div class="foot">both away before October</div>
+    </div>
+    <div class="stat b">
+      <div class="lbl">Pools to close down</div>
+      <div class="num">400+</div>
+      <div class="foot">the winter programme</div>
+    </div>
+    <div class="stat a">
+      <div class="lbl">Signed off</div>
+      <div class="num">2</div>
+      <div class="foot">finished and handed back</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ SIGNED OFF ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">01 &mdash; Completed</div>
+      <h3>Signed off</h3>
+      <p class="intro">Two off the board since the middle of July &mdash; both finished properly and handed back clean.</p>
+    </div>
+
+    <div class="ledger">
+      <div class="lrow">
+        <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <div>
+          <h4>Norry Smith &mdash; Driveway</h4>
+          <div class="meta">Norman Smith &middot; Completed 27 July 2026</div>
+          <p class="desc">Came to us on a referral from Christian, and we were in and out inside the month. Tidy bit of tarmac, client made up &mdash; and referral work like this is what keeps the next three coming through the door.</p>
+        </div>
+      </div>
+
+      <div class="lrow">
+        <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <div>
+          <h4>Stanpit</h4>
+          <div class="meta">Dorset &middot; Completed August 2026</div>
+          <p class="desc">Snagged out and finished over the summer, with the turf going down in early September so the site looked right before the clients got home. That last week of tidying is the bit people remember.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ON SITE NOW ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">02 &mdash; Live</div>
+      <h3>On the go</h3>
+      <p class="intro">Five jobs on the books right now. Bars show how far through the programme we are on the clock &mdash; not how much of the work is in the ground.</p>
+    </div>
+
+    <div class="jobs">
+
+      <article class="job lead">
+        <div class="job-top">
+          <div>
+            <h4>Forest Valley Court</h4>
+            <div class="client">Regency Living &middot; Matchams Lane, Christchurch</div>
+          </div>
+          <span class="chip live">Phase 1 live</span>
+        </div>
+        <p class="body">The big one, and the site we hold everything else up against. Inductions done, paperwork straight, welfare right &mdash; when anyone asks what a properly run LGH job looks like, this is the one we point at. Phase 1 is 23 plots, and we are laying the Phase 2 drainage while we are at it, which puts us ahead before that phase is even called. Scored 71% on Regency&rsquo;s own H&amp;S audit and the actions are getting knocked off.</p>
+        <div class="facts">
+          <span><b>Started</b> 9 April 2026</span>
+          <span><b>PM</b> Chris Appleby / Dean Bradley</span>
+          <span><b>Scheme</b> 78 bases over 4 phases</span>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>Solent Grange</h4>
+            <div class="client">Regency Living &middot; Hampshire</div>
+          </div>
+          <span class="chip roll">Rolling</span>
+        </div>
+        <p class="body">Site cleared, blockwork return done, eight weeks now booked in and Andy leading it. Three-tonner and one-tonner on site and 120 soakaways landed. Andy is taking on the ordering himself now &mdash; materials on site before they are needed, which is exactly how it should work.</p>
+        <div class="prog">
+          <div class="prog-lbl"><span>7 Sep &rarr; early Nov</span><span class="pct">16% elapsed</span></div>
+          <div class="bar"><span style="width:16%"></span></div>
+        </div>
+        <div class="facts">
+          <span><b>Leading</b> Andy</span>
+          <span><b>Client contact</b> Tick Ipate</span>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>Silver Cranes</h4>
+            <div class="client">The Silver Crane Co &middot; Innovation Close, Poole</div>
+          </div>
+          <span class="chip new">Starts Mon 21st</span>
+        </div>
+        <p class="body">Retaining wall works behind Units 1 and 2, going in bang on time. Commercial site with George leading and support behind him. RAMS and insurances already with the surveyor and pre-commencement is done &mdash; turn up Monday and go.</p>
+        <div class="facts">
+          <span><b>Starts</b> Mon 21 September</span>
+          <span><b>Leading</b> George</span>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>73 West Street</h4>
+            <div class="client">Mr David Bell &middot; Bere Regis</div>
+          </div>
+          <span class="chip new">Just started</span>
+        </div>
+        <p class="body">Broke ground Monday with Mick running it. New-build groundworks on a tight village plot &mdash; reduced dig, strip foundations, SIPs sole plate, block and beam, boundary brickwork. The sheet piling is no longer a given: we dig to formation first and let the ground tell us what it needs. Nine weeks of proper work.</p>
+        <div class="prog">
+          <div class="prog-lbl"><span>14 Sep &rarr; 13 Nov</span><span class="pct">3% elapsed</span></div>
+          <div class="bar"><span style="width:3%"></span></div>
+        </div>
+        <div class="facts">
+          <span><b>Running it</b> Mick</span>
+          <span><b>PM</b> Chris Appleby</span>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>194 Church Street</h4>
+            <div class="client">Jennifer Taylor &middot; Upwey, Weymouth</div>
+          </div>
+          <span class="chip live">Closing out</span>
+        </div>
+        <p class="body">Retaining wall at Upwey, on since early July and now finished &mdash; muckaway gone, reinforcement in, wall built. The balance went out this week, which is the best sound a job makes. A long way west of the yard and it still came in clean.</p>
+        <div class="facts">
+          <span><b>Started</b> 6 July 2026</span>
+          <span><b>Scope</b> Retaining wall</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="band-photo">
+      <img src="assets/site-foundations-wide.jpg" alt="Aerial view looking straight down on an orange tracked excavator working a chalk formation, with stacked block paving and bog mats alongside">
+      <div class="cap"><b>Down to formation.</b> Reduced-level dig and sub-base work &mdash; the stage where ground conditions decide how much temporary works a job actually needs.</div>
+    </div>
+  </section>
+
+  <!-- ============ STARTING THIS MONTH ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">03 &mdash; Next up</div>
+      <h3>Starting this month</h3>
+      <p class="intro">Two more away before October, and between them they carry us well into the back end of the year.</p>
+    </div>
+
+    <div class="jobs">
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>Timbertoft</h4>
+            <div class="client">Ecologic Developments &middot; Hensting Lane, Fishers Pond</div>
+          </div>
+          <span class="chip new">End of month</span>
+        </div>
+        <p class="body">SIPs new build in Hampshire and a proper piece of groundworks. Stepped strip footings across five level changes, 375mm NuSpan precast floor on insulated sleeper walls, and every step in the footing set out to the millimetre. Client wants us in by the end of the month, with a soft start on the big digger possible ahead of full mobilisation.</p>
+        <div class="facts">
+          <span><b>Structure</b> SIPs on precast floor</span>
+          <span><b>Engineer</b> AWA</span>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-top">
+          <div>
+            <h4>Benham Estate</h4>
+            <div class="client">Starting end of the month</div>
+          </div>
+          <span class="chip new">End of month</span>
+        </div>
+        <p class="body">The biggest start we have got booked, and it is confirmed. Pre-commencement done, mobilisation next. This is the one that carries the crews through the back end of the year.</p>
+        <div class="facts">
+          <span><b>Status</b> Confirmed</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="drawing">
+      <img src="assets/timbertoft-drawing.png" alt="Ground floor foundation general arrangement drawing for Timbertoft: a stepped strip foundation plan colour-coded by top-of-foundation level, with finished floor levels, step markers and dimensions">
+      <div class="cap"><b>Timbertoft &mdash; ground floor foundation GA.</b> Every colour is a different top-of-foundation level and every yellow tag is a step. Drawing 15221-001 rev P2 by AWA, June 2026 &mdash; issued <b>preliminary, not for construction</b>, so work to the latest issued set on site.</div>
+    </div>
+  </section>
+
+  <!-- ============ POOLS ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">04 &mdash; Pools</div>
+      <h3>Closedown season</h3>
+      <p class="intro">The other half of the business goes into its busiest run of the year.</p>
+    </div>
+
+    <div class="pools">
+      <div class="p-num">400+</div>
+      <div class="p-body">
+        <p class="p-lead">pools to close down before the cold sets in</p>
+        <p class="p-sub">Four hundred and counting, and the weather sets the deadline, not us. Every one shut down properly is a pool that opens clean in spring and a customer who rings us rather than somebody else. It is the biggest single run of work in the calendar &mdash; get into a rhythm early and it looks after itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEW KIT ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">05 &mdash; Kit</div>
+      <h3>New on the fleet</h3>
+      <p class="intro">Two additions to the yard. Both mean less waiting on somebody else and more of the job done on our own terms.</p>
+    </div>
+
+    <div class="kit">
+      <article class="kit-item">
+        <div class="kit-tag">New van</div>
+        <h4>Ford Transit &mdash; grey</h4>
+        <p>Another Transit on the fleet means a crew is not waiting on a lift and gear is not being shuffled between sites first thing. Straight out in the morning, straight to work.</p>
+      </article>
+      <article class="kit-item">
+        <div class="kit-tag">New roller</div>
+        <h4>Caterpillar roller</h4>
+        <p>Compaction in our own hands. No hire desk, no day rates, no waiting on a slot &mdash; the sub-base goes down when we are ready for it, and it goes down right. Sits alongside the Cat 320 GX, so it is kit the lads already know.</p>
+      </article>
+    </div>
+
+    <div class="band-photo">
+      <img src="assets/fleet-row.jpg" alt="A line of orange LG Howson Ltd tracked excavators parked on a cleared sand-coloured site under a clear blue sky">
+      <div class="cap"><b>Ours, not hired.</b> Plant across the 360&deg; range on our own plates is why the autumn start dates can be held without ringing round for machines.</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-logo">
+      <img src="assets/logo-primary.png" alt="LG Howson Ltd">
+      <div>
+        <div class="n">LG Howson Ltd</div>
+        <div class="t">Groundworks &middot; Civil Engineering &middot; Swimming Pools</div>
+      </div>
+    </div>
+    <div class="foot-meta">
+      <div>Issue 01 &middot; Compiled 16 September 2026</div>
+      <div class="src">Source: projects register, project pages and the planning meeting of 8 September 2026.</div>
+      <div class="src">Photography: LG Howson site and fleet library.</div>
+    </div>
+  </div>
+</footer>
