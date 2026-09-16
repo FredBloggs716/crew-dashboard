@@ -46,8 +46,10 @@ palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
 - Programme bars show **time elapsed against programme**, not percentage of
   work complete. Labelled as such on the page.
 - Horton Commercials is marked Complete on the register with no completion date
-  and an open task list, so it is excluded from the completed count and called
-  out in a register note.
+  and an open task list, so it is excluded from the completed count. The
+  on-page register note flagging this was removed in v4 at the client's
+  request — the data issue still stands, it is just no longer surfaced to
+  readers.
 - Stanpit has no recorded completion date; "August 2026" comes from the
   Projects page archive list.
 - Silver Cranes, Benham Estate, Timbertoft and Venom appear only in the
