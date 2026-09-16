@@ -10,6 +10,40 @@ sites running now, and what starts next.
 
 Published as an Artifact: https://claude.ai/artifact/YM6enH9iHVd9nCYeQ85Av7
 
+## Downloadable copy
+
+`newsletter.html` targets the Artifact platform, which supplies the document
+skeleton and serves `assets/` alongside it. A downloaded file gets neither, so
+build the standalone copy:
+
+```bash
+python3 build-dist.py                      # needs pillow; fetches the fonts once
+```
+
+That writes `dist/LGH-Site-Report-Issue-01.html` — one file, no network calls at
+all. It inlines every image (downscaled and re-encoded, 3.0 MB → 1.8 MB) and the
+three brand WOFF2s (94 KB, latin subset), declares UTF-8, restores the reset the
+platform would have added, and adds A4 print rules.
+
+For a PDF, print it with the bundled Chromium:
+
+```bash
+/opt/pw-browsers/chromium-1194/chrome-linux/chrome --headless --disable-gpu \
+  --no-sandbox --no-pdf-header-footer --virtual-time-budget=25000 \
+  --print-to-pdf=dist/LGH-Site-Report-Issue-01.pdf \
+  file://$PWD/dist/LGH-Site-Report-Issue-01.html
+```
+
+Two traps this handles, both of which silently wreck the output:
+
+- **No charset → mojibake.** Every em-dash renders as `â€"` if the document does
+  not declare UTF-8. The platform declares it; a standalone file must do so itself.
+- **Google Fonts is not always reachable.** Chromium's print path failed the TLS
+  handshake here and fell back to DejaVu, which loses the brand entirely. Fonts
+  are embedded so this cannot happen on anyone's machine either.
+
+`dist/` is gitignored — it is build output, and 5.5 MB of it.
+
 ## Brand tokens
 
 Taken from the crew dashboard (`index.html`) so screen and print match — same
