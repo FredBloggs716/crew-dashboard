@@ -48,21 +48,27 @@ what the job means and why it is worth doing, rather than a list of facts.
 Programme dates, scope and trade detail are unchanged and still accurate; only
 the framing moved. Keep that register for future issues.
 
-## Outstanding — new kit section needs real detail
+## New kit — section 04
 
-Section 04 (**New on the fleet**) carries a new van and a new roller, both with
-`[ make / model ]` shown in the house tinted-field style because **neither
-appears in any system**:
+A **grey Ford Transit** and a **Caterpillar roller**, both confirmed by the
+client. Neither appears in any system: the Vehicle & Plant Register
+(`4b381c1e…`) is empty, the People & HR *Vehicles & Plant* database has no
+roller and nothing newer than a Sept 2024 Isuzu, and no purchase
+correspondence was found in Gmail or Notion search.
 
-- Not in the Vehicle & Plant Register (`4b381c1e…`) — that database is empty
-- Not in the People & HR *Vehicles & Plant* database — newest purchase there is
-  an Isuzu DMAX V-Cross dated Sept 2024, and there is no roller of any kind
-- Not in Gmail across the last 120 days
-- Not in Notion search
+Probable paper trail for the roller, unconfirmed: RJ & KD McLean Ltd
+(Tractors and Plant, Semley) invoice **124771**, account 5827, paid
+28 Aug 2026, collected Tue 1 Sep 2026. The machine is named only inside
+`Invoice_124771.PDF`, which this session had no tool to open — so no
+acquisition date is stated on the page.
 
-Fill in make, model and the month each landed before this issue goes out, and
-add both to the Vehicle & Plant Register so the next issue can pick them up
-automatically.
+Both should be added to the Vehicle & Plant Register so the next issue picks
+them up automatically.
+
+**Deliberately excluded:** a Mercedes-Benz GLB 250+ ordered 30 Aug 2026 through
+Sandown / Mercedes-Benz of Poole. It is a car, not a van, it had not been
+built as of mid-September, and it is the MD's — wrong note for a newsletter
+written to lift the crew.
 
 ## Caveats carried into the copy
 
