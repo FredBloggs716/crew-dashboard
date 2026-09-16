@@ -55,6 +55,17 @@ palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
   spellings and details need confirming before this goes outside the company.
 - **No job values, contract sums or costs appear anywhere in the newsletter.**
   Removed at the client's request in v2 — the stat strip, job cards, pipeline
-  timeline and tender table all carry programme and scope detail instead.
+  timeline and tender section carry programme and scope detail instead.
+- **No forward work is identifiable.** In v3 the pipeline was anonymised for
+  commercial confidentiality: site names, addresses, build names and client
+  names are out of the "Coming up" timeline, the tender table was replaced by a
+  count, and the "also open on the register" job list became a bare number.
+  Forward entries carry timing, trade and crew only. A visible notice on the
+  page states that sites and clients are withheld.
+- **Current sites are still named** (Forest Valley Court, Clifton Road,
+  73 West Street, Solent Grange, Martinique Farm, Plantation Bungalow) along
+  with their clients. This is a deliberate split — a live site with hoardings
+  and liveried plant is already visible — but it has not been confirmed with
+  the client, so check before external circulation.
 - Commercially sensitive material from the same meeting (debtor balances,
   supplier margins, individual performance) is deliberately excluded.

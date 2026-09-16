@@ -145,13 +145,19 @@
   .stop h4{font-size:16px;font-weight:700;margin-top:3px}
   .stop .d{font-size:13.5px;color:var(--mute);margin-top:3px;max-width:60ch}
 
+  /* ---------- Withheld notice ---------- */
+  .redacted{display:flex;flex-direction:column;gap:5px;border:1px solid var(--rule);border-left:3px solid var(--mute);
+    background:var(--card);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:22px}
+  .redacted .h{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+  .redacted p{font-size:13.5px;color:var(--steel);max-width:68ch}
+
   /* ---------- Tenders ---------- */
-  .tender-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
-  table.tenders{width:100%;border-collapse:collapse;min-width:440px}
-  .tenders th,.tenders td{text-align:left;padding:12px 16px;font-size:13.5px;border-bottom:1px solid var(--rule)}
-  .tenders th{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:var(--bg)}
-  .tenders tr:last-child td{border-bottom:0}
-  .tenders td.job-n{font-weight:600;color:var(--ink)}
+  .tender-strip{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--rule);
+    border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .tender-strip .t-num{font-family:'Archivo',sans-serif;font-weight:800;font-size:44px;line-height:1;
+    color:var(--crimson);flex:none;font-variant-numeric:tabular-nums}
+  .tender-strip .t-lead{font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;color:var(--ink)}
+  .tender-strip .t-sub{font-size:13px;color:var(--mute);margin-top:3px;max-width:58ch}
 
   /* ---------- Photo band ---------- */
   .band-photo{margin-top:32px;border-radius:12px;overflow:hidden;border:1px solid var(--rule);box-shadow:var(--shadow)}
@@ -207,7 +213,7 @@
     <div class="wrap">
       <span class="kicker">Two months on site</span>
       <h2>Two jobs signed off, six sites running, and four more starting before November</h2>
-      <p class="stand">West Street broke ground on Monday, Solent Grange is eight weeks in the diary, and Silver Cranes follows on the 21st. Here is where every job stands.</p>
+      <p class="stand">West Street broke ground on Monday, Solent Grange is eight weeks in the diary, and another commercial start follows on the 21st. Here is where every job stands.</p>
     </div>
   </div>
 </div>
@@ -391,7 +397,7 @@
 
     <div class="also">
       <div class="h">Also open on the register</div>
-      <div class="list">Silver Lakes &middot; Faraway West (Keyhaven) &middot; Woodland Avenue &middot; Beechwood &middot; Clifton House &middot; Ashley Drive &middot; Rhinefield Close &middot; Dalmeny &middot; AFC Bournemouth &middot; Robert Rice (Knook Camp) &middot; Campbell House (Weybridge) &middot; Kings Avenue &middot; Brooklands &middot; Levetts Farm &middot; Reary More &middot; Rob &amp; Jenny Mills &middot; Stanton Wick</div>
+      <div class="list">A further <b>17 jobs</b> sit open on the register alongside the six above — a mix of live sites, jobs between phases and work not yet mobilised. Named in the register, not here.</div>
     </div>
 
     <div class="band-photo">
@@ -405,81 +411,72 @@
     <div class="sec-head">
       <div class="eyebrow">03 — Pipeline</div>
       <h3>Coming up</h3>
-      <p class="intro">Confirmed starts first, then the ones still waiting on a date. Solid markers are committed; grey markers are not yet fixed.</p>
+      <p class="intro">What the diary looks like between now and the end of the year. Solid markers are committed; grey markers are not yet fixed.</p>
+    </div>
+
+    <div class="redacted">
+      <div class="h">Sites and clients withheld</div>
+      <p>Forward work is described by timing, trade and crew only. Site names, addresses, build names and client names are deliberately left out of this section — the pipeline is the part of the business worth protecting.</p>
     </div>
 
     <div class="rail">
 
       <div class="stop">
         <div class="when">Mon 21 September</div>
-        <h4>Silver Cranes — Tower Park</h4>
-        <p class="d">On time and confirmed. Commercial job, so no client interface at site level. Pre-commencement with Damon this week. George running it with assistance.</p>
-      </div>
-
-      <div class="stop">
-        <div class="when">Fri 25 September</div>
-        <h4>Plantation Bungalow — SSE connection</h4>
-        <p class="d">Electrical duct must be open and ready for SSE. The one genuinely immovable date in this period.</p>
+        <h4>Commercial groundworks — start confirmed</h4>
+        <p class="d">On programme and confirmed. Commercial site with no client interface at operative level, so George is running it with assistance. Pre-commencement held this week.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">End September — target</div>
-        <h4>Timbertoft</h4>
-        <p class="d">Client wants an end-of-September start; a soft start with Christie and the big digger is possible. Date still to be confirmed.</p>
+        <h4>Large groundworks contract</h4>
+        <p class="d">Client is pushing for an end-of-September start. A soft start with the big digger is possible ahead of full mobilisation. Date not yet fixed.</p>
       </div>
 
       <div class="stop">
         <div class="when">Week commencing 12 October</div>
-        <h4>Benham Estate</h4>
-        <p class="d">The largest confirmed start in the pipeline. Pre-commencement meeting held ahead of mobilisation.</p>
+        <h4>Major civils start — largest in the pipeline</h4>
+        <p class="d">The biggest confirmed start we have booked. Pre-commencement meeting held ahead of mobilisation.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Late October — indicative</div>
-        <h4>Kings Avenue, Poole</h4>
-        <p class="d">Garage groundworks for Mr &amp; Mrs Bailey. Tied to West Street finishing; amended quote and a confirmed start date still outstanding.</p>
+        <h4>Domestic garage groundworks</h4>
+        <p class="d">Tied to one of the current jobs finishing. Amended quote and a confirmed start date both still outstanding.</p>
       </div>
 
       <div class="stop soft">
-        <div class="when">After Matcham's — ≈ 5 weeks</div>
-        <h4>Venom</h4>
-        <p class="d">Committed and ready to go. Four to five operatives with the big machines once Matcham's releases the crew.</p>
+        <div class="when">≈ 5 weeks — crew dependent</div>
+        <h4>Large plant package</h4>
+        <p class="d">Committed and ready to go. Four to five operatives with the big machines, starting once a current contract releases the crew.</p>
       </div>
 
       <div class="stop soft">
-        <div class="when">Following Solent Grange</div>
-        <h4>Regency Heights — turfing</h4>
-        <p class="d">Expected to follow on from Solent Grange. Regency have also flagged Manor Farm and Rochester Court behind it.</p>
+        <div class="when">Follows current small works</div>
+        <h4>Landscaping package — existing client</h4>
+        <p class="d">Expected to follow straight on from the small-works run, with two further schemes flagged behind it.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Award expected</div>
-        <h4>Silver Lakes — next phase</h4>
-        <p class="d">Keystone are at capacity, so the next phase is expected to come our way.</p>
+        <h4>Next phase on an existing site</h4>
+        <p class="d">The incumbent is at capacity, so the next phase is expected to come our way.</p>
       </div>
 
     </div>
 
     <h4 style="font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:34px 0 12px">Out to tender</h4>
-    <div class="tender-wrap">
-      <table class="tenders">
-        <thead>
-          <tr><th>Job</th><th>Client</th><th>Division</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="job-n">RMB Chivenor — Hangar 14 demolition</td><td>Robert Rice Ltd / MoD</td><td>Civil Engineering</td></tr>
-          <tr><td class="job-n">White Farm — drainage &amp; external works</td><td>BJM Ltd</td><td>Groundworks</td></tr>
-          <tr><td class="job-n">Superior Seals — tool room adaptations</td><td>Bennington Green</td><td>Groundworks</td></tr>
-          <tr><td class="job-n">Seven Steps Upway</td><td>—</td><td>Groundworks</td></tr>
-          <tr><td class="job-n">7 Nugent Road</td><td>—</td><td>Groundworks</td></tr>
-          <tr><td class="job-n">Northerwood Farm — Phase 2</td><td>—</td><td>Groundworks</td></tr>
-        </tbody>
-      </table>
+    <div class="tender-strip">
+      <div class="t-num">6</div>
+      <div class="t-body">
+        <p class="t-lead">live tenders in with clients</p>
+        <p class="t-sub">Five groundworks, one civil engineering. Job names, clients and values withheld while the bids are open.</p>
+      </div>
     </div>
 
     <div class="band-photo">
       <img src="assets/fleet-row.jpg" alt="A line of orange LG Howson Ltd tracked excavators parked on a cleared sand-coloured site under a clear blue sky">
-      <div class="cap"><b>Ready to move.</b> Own plant across the 360° range keeps mobilisation inside our own control — the reason Silver Cranes and Benham can be held to their dates.</div>
+      <div class="cap"><b>Ready to move.</b> Own plant across the 360° range keeps mobilisation inside our own control — the reason the autumn start dates can be held without waiting on hire.</div>
     </div>
   </section>
 
