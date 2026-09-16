@@ -41,6 +41,29 @@ palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
 - Photography: Google Drive `photos/` — `aerial-site.jpg`,
   `site-foundations-wide.jpg`, `fleet-row.jpg`
 
+## Voice
+
+From v5 the job narratives are written for the crew, not for a client file —
+what the job means and why it is worth doing, rather than a list of facts.
+Programme dates, scope and trade detail are unchanged and still accurate; only
+the framing moved. Keep that register for future issues.
+
+## Outstanding — new kit section needs real detail
+
+Section 04 (**New on the fleet**) carries a new van and a new roller, both with
+`[ make / model ]` shown in the house tinted-field style because **neither
+appears in any system**:
+
+- Not in the Vehicle & Plant Register (`4b381c1e…`) — that database is empty
+- Not in the People & HR *Vehicles & Plant* database — newest purchase there is
+  an Isuzu DMAX V-Cross dated Sept 2024, and there is no roller of any kind
+- Not in Gmail across the last 120 days
+- Not in Notion search
+
+Fill in make, model and the month each landed before this issue goes out, and
+add both to the Vehicle & Plant Register so the next issue can pick them up
+automatically.
+
 ## Caveats carried into the copy
 
 - Programme bars show **time elapsed against programme**, not percentage of

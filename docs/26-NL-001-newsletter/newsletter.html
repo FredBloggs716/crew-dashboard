@@ -165,6 +165,16 @@
   .band-photo .cap{background:var(--card);padding:11px 16px;font-size:12.5px;color:var(--mute)}
   .band-photo .cap b{color:var(--steel);font-weight:600}
 
+  /* ---------- New kit ---------- */
+  .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:16px}
+  .kit-item{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+  .kit-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:#fff;background:var(--crimson);padding:3px 9px;border-radius:4px}
+  .kit-item h4{font-size:17px;font-weight:700;margin-top:11px}
+  .kit-item p{font-size:14px;margin-top:8px;max-width:52ch}
+  .tbc{background:var(--crimson-tint);color:var(--crimson-dk);border-radius:4px;padding:1px 8px;
+    font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600}
+
   /* ---------- Footer ---------- */
   footer{margin-top:48px;background:var(--band);color:var(--on-band-mute);padding-block:26px 30px}
   .foot-row{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -206,8 +216,8 @@
   <div class="hero-copy">
     <div class="wrap">
       <span class="kicker">Two months on site</span>
-      <h2>Two jobs signed off, six sites running, and four more starting before November</h2>
-      <p class="stand">West Street broke ground on Monday, Solent Grange is eight weeks in the diary, and another commercial start follows on the 21st. Here is where every job stands.</p>
+      <h2>Two jobs away, six sites running, and four more before November</h2>
+      <p class="stand">West Street broke ground Monday, Solent Grange is eight weeks in the diary, and the first of the autumn starts goes in on the 21st. There is new kit on the yard as well. Here is where we are at.</p>
     </div>
   </div>
 </div>
@@ -219,22 +229,22 @@
     <div class="stat">
       <div class="lbl">Signed off</div>
       <div class="num">2</div>
-      <div class="foot">jobs completed in the period</div>
+      <div class="foot">finished and handed back</div>
     </div>
     <div class="stat g">
       <div class="lbl">On site now</div>
       <div class="num">6</div>
-      <div class="foot">sites with crews working</div>
+      <div class="foot">crews out every day</div>
     </div>
     <div class="stat b">
-      <div class="lbl">Active on register</div>
+      <div class="lbl">On the books</div>
       <div class="num">21</div>
-      <div class="foot">jobs open, including those above</div>
+      <div class="foot">jobs live on the register</div>
     </div>
     <div class="stat a">
       <div class="lbl">Starting by 31 Oct</div>
       <div class="num">4</div>
-      <div class="foot">new sites in the diary</div>
+      <div class="foot">new sites before November</div>
     </div>
   </div>
 </div>
@@ -246,7 +256,7 @@
     <div class="sec-head">
       <div class="eyebrow">01 — Completed</div>
       <h3>Signed off</h3>
-      <p class="intro">Work finished and handed back between 17 July and 16 September 2026.</p>
+      <p class="intro">Two off the board since the middle of July — both finished properly and handed back clean.</p>
     </div>
 
     <div class="ledger">
@@ -255,7 +265,7 @@
         <div>
           <h4>Norry Smith — Driveway</h4>
           <div class="meta">Norman Smith &middot; LGH-2026-039 &middot; Completed 27 July 2026</div>
-          <p class="desc">Tarmac driveway, won on a referral from Christian. On site and finished inside the month.</p>
+          <p class="desc">Came to us on a referral from Christian, and we were in and out inside the month. Tidy bit of tarmac, client made up — and referral work like this is what keeps the next three coming through the door.</p>
         </div>
       </div>
 
@@ -264,7 +274,7 @@
         <div>
           <h4>Stanpit</h4>
           <div class="meta">Dorset &middot; LGH-2026-033 &middot; Completed August 2026</div>
-          <p class="desc">Groundworks completed and snagged out over the summer, with the last of the turfing going down in early September ahead of the clients returning.</p>
+          <p class="desc">Snagged out and finished over the summer, with the turf going down in early September so the site looked right before the clients got home. That last week of tidying is the bit people remember.</p>
         </div>
       </div>
     </div>
@@ -276,7 +286,7 @@
     <div class="sec-head">
       <div class="eyebrow">02 — Live</div>
       <h3>On site now</h3>
-      <p class="intro">Where the crews are this week. Programme bars show time elapsed against the agreed programme — not percentage of work complete.</p>
+      <p class="intro">Where the lads are this week. Bars show how far through the programme we are on the clock — not how much of the work is in the ground.</p>
     </div>
 
     <div class="jobs">
@@ -289,7 +299,7 @@
           </div>
           <span class="chip live">Phase 1 live</span>
         </div>
-        <p class="body">The biggest job on the books and the one we hold up as the standard — induction, paperwork and welfare all done properly. Phase 1 covers 23 plots (22 residential plus the marketing suite), with Phase 2 drainage going in at the same time. Scored 71% on the Regency Living health and safety audit, with the action list being worked through.</p>
+        <p class="body">The big one, and the site we hold everything else up against. Inductions done, paperwork straight, welfare right — when anyone asks what a properly run LGH job looks like, this is the one we point at. Phase 1 is 23 plots, and we are laying the Phase 2 drainage while we are at it, which puts us ahead before that phase is even called. Scored 71% on Regency's own H&amp;S audit and the actions are getting knocked off.</p>
         <div class="facts">
           <span><b>Started</b> 9 April 2026</span>
           <span><b>PM</b> Chris Appleby / Dean Bradley</span>
@@ -305,7 +315,7 @@
           </div>
           <span class="chip live">Live</span>
         </div>
-        <p class="body">Full groundworks package — reduced-level dig, strip foundations, lift base, block and beam floor, plus foul and surface water drainage with attenuation and pump chambers.</p>
+        <p class="body">Three-quarters through a 16-week programme and still on the rails. The full package on this one — reduced-level dig, strip foundations, lift base, block and beam, then foul and surface water with the attenuation tank and pump chambers. Everything we do, on one job.</p>
         <div class="prog">
           <div class="prog-lbl"><span>23 Jun → 13 Oct</span><span class="pct">76% elapsed</span></div>
           <div class="bar"><span style="width:76%"></span></div>
@@ -324,7 +334,7 @@
           </div>
           <span class="chip new">Just started</span>
         </div>
-        <p class="body">Broke ground Monday. New-build groundworks with a retaining structure — reduced dig, strip foundations, SIPs sole plate, block and beam floor and boundary brickwork. Sheet piling is now conditional on what the ground gives up once we are down to formation.</p>
+        <p class="body">Broke ground Monday with Mick running it. New-build groundworks on a tight village plot — reduced dig, strip foundations, SIPs sole plate, block and beam, boundary brickwork. The sheet piling is no longer a given: we dig to formation first and let the ground tell us what it needs. Nine weeks of proper work.</p>
         <div class="prog">
           <div class="prog-lbl"><span>14 Sep → 13 Nov</span><span class="pct">3% elapsed</span></div>
           <div class="bar"><span style="width:3%"></span></div>
@@ -343,7 +353,7 @@
           </div>
           <span class="chip roll">Rolling</span>
         </div>
-        <p class="body">Site cleared and the blockwork return finished, with an eight-week run now booked. Three-tonne and one-tonne machines on site, 120 of 150 soakaways delivered. Downpipes and gully lids done under PO 26-007302; topsoil landed 25 August. RAMS, schedule of works and vesting certificate all issued.</p>
+        <p class="body">Site cleared, blockwork return done, eight weeks now booked in and Andy leading it. Three-tonner and one-tonner on site and 120 soakaways landed. Andy is taking on the ordering himself now — materials on site before they are needed, which is exactly how it should work.</p>
         <div class="prog">
           <div class="prog-lbl"><span>7 Sep → early Nov</span><span class="pct">16% elapsed</span></div>
           <div class="bar"><span style="width:16%"></span></div>
@@ -362,7 +372,7 @@
           </div>
           <span class="chip live">Restarting</span>
         </div>
-        <p class="body">Back underway this month — roughly two weeks of brickwork wraparound with Lewis, then three weeks on the septic tank and utilities. A mini digger is being sourced for the dig-out.</p>
+        <p class="body">Back on it this month. Lewis has a fortnight on the brickwork wraparound, then three weeks of septic tank and utilities. Mini digger being sorted for the dig-out.</p>
         <div class="facts">
           <span><b>Crew</b> Lewis</span>
           <span><b>Run</b> ≈ 5 weeks</span>
@@ -377,7 +387,7 @@
           </div>
           <span class="chip new">Date-critical</span>
         </div>
-        <p class="body">Ducting and drain connections. Only the electrical duct is time-critical — SSE are on site on the 25th, so a mini and an operator go in on the Saturday to make sure it is open and ready for them.</p>
+        <p class="body">Ducting and drain connections, and one date that does not move: SSE are on site on the 25th and that electrical duct will be open and waiting for them. Somebody goes in Saturday with a mini to make certain of it. Turning up ready is how you get asked back.</p>
         <div class="facts">
           <span><b>Hard date</b> SSE, 25 September</span>
         </div>
@@ -387,7 +397,7 @@
 
     <div class="also">
       <div class="h">Also open on the register</div>
-      <div class="list">A further <b>17 jobs</b> sit open on the register alongside the six above — a mix of live sites, jobs between phases and work not yet mobilised. Named in the register, not here.</div>
+      <div class="list">Another <b>17 jobs</b> sit open on the register behind the six above — live sites, jobs between phases and work waiting to mobilise. Plenty to go at. Named in the register, not in here.</div>
     </div>
 
     <div class="band-photo">
@@ -401,7 +411,7 @@
     <div class="sec-head">
       <div class="eyebrow">03 — Pipeline</div>
       <h3>Coming up</h3>
-      <p class="intro">What the diary looks like between now and the end of the year. Solid markers are committed; grey markers are not yet fixed.</p>
+      <p class="intro">The diary between now and the end of the year, and it is filling up nicely. Solid markers are committed; grey markers are not fixed yet.</p>
     </div>
 
     <div class="redacted">
@@ -414,43 +424,43 @@
       <div class="stop">
         <div class="when">Mon 21 September</div>
         <h4>Commercial groundworks — start confirmed</h4>
-        <p class="d">On programme and confirmed. Commercial site with no client interface at operative level, so George is running it with assistance. Pre-commencement held this week.</p>
+        <p class="d">First of the autumn starts and it is going in bang on time. Commercial site, George leading with support behind him. Pre-commencement done this week.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">End September — target</div>
         <h4>Large groundworks contract</h4>
-        <p class="d">Client is pushing for an end-of-September start. A soft start with the big digger is possible ahead of full mobilisation. Date not yet fixed.</p>
+        <p class="d">Client wants us in by the end of the month. A soft start with the big digger is on the cards ahead of full mobilisation — date still to be nailed down.</p>
       </div>
 
       <div class="stop">
         <div class="when">Week commencing 12 October</div>
         <h4>Major civils start — largest in the pipeline</h4>
-        <p class="d">The biggest confirmed start we have booked. Pre-commencement meeting held ahead of mobilisation.</p>
+        <p class="d">The biggest start we have got booked, and it is confirmed. Pre-commencement done, mobilisation next. This is the one that carries us through the back end of the year.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Late October — indicative</div>
         <h4>Domestic garage groundworks</h4>
-        <p class="d">Tied to one of the current jobs finishing. Amended quote and a confirmed start date both still outstanding.</p>
+        <p class="d">Straight off the back of one of the current jobs finishing. Amended quote and a firm start date still to come back.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">≈ 5 weeks — crew dependent</div>
         <h4>Large plant package</h4>
-        <p class="d">Committed and ready to go. Four to five operatives with the big machines, starting once a current contract releases the crew.</p>
+        <p class="d">Four or five of us and the big machines. Committed and ready to roll the moment a current contract releases the crew.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Follows current small works</div>
         <h4>Landscaping package — existing client</h4>
-        <p class="d">Expected to follow straight on from the small-works run, with two further schemes flagged behind it.</p>
+        <p class="d">Should follow straight on from the small-works run — and there are two more schemes flagged behind it. Keep this client happy and the work keeps coming.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Award expected</div>
         <h4>Next phase on an existing site</h4>
-        <p class="d">The incumbent is at capacity, so the next phase is expected to come our way.</p>
+        <p class="d">The firm holding it is at capacity, so the next phase is expected to land with us. Work coming to us rather than us chasing it.</p>
       </div>
 
     </div>
@@ -459,14 +469,37 @@
     <div class="tender-strip">
       <div class="t-num">6</div>
       <div class="t-body">
-        <p class="t-lead">live tenders in with clients</p>
-        <p class="t-sub">Five groundworks, one civil engineering. Job names, clients and values withheld while the bids are open.</p>
+        <p class="t-lead">live tenders sitting with clients</p>
+        <p class="t-sub">Five groundworks, one civils. Land half of those and the winter takes care of itself. Job names, clients and values stay out of here while the bids are live.</p>
       </div>
+    </div>
+
+  </section>
+
+  <!-- ============ NEW KIT ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">04 — Kit</div>
+      <h3>New on the fleet</h3>
+      <p class="intro">Two additions to the yard. Both mean less waiting on somebody else and more of the job done on our own terms.</p>
     </div>
 
     <div class="band-photo">
       <img src="assets/fleet-row.jpg" alt="A line of orange LG Howson Ltd tracked excavators parked on a cleared sand-coloured site under a clear blue sky">
-      <div class="cap"><b>Ready to move.</b> Own plant across the 360° range keeps mobilisation inside our own control — the reason the autumn start dates can be held without waiting on hire.</div>
+      <div class="cap"><b>Ours, not hired.</b> Plant across the 360° range on our own plates is why the autumn start dates can be held without ringing round for machines.</div>
+    </div>
+
+    <div class="kit">
+      <article class="kit-item">
+        <div class="kit-tag">New van</div>
+        <h4><span class="tbc">[ make / model ]</span></h4>
+        <p>Another van on the fleet means a crew is not waiting on a lift, and gear is not being shuffled between sites first thing. Straight out in the morning, straight to work.</p>
+      </article>
+      <article class="kit-item">
+        <div class="kit-tag">New roller</div>
+        <h4><span class="tbc">[ make / model ]</span></h4>
+        <p>Compaction in our own hands. No hire desk, no day rates, no waiting for a slot — the sub-base goes down when we are ready for it, and it goes down right.</p>
+      </article>
     </div>
   </section>
 
