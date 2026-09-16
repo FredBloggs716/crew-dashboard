@@ -97,20 +97,13 @@
 
   /* ---------- Signed off (ledger rows) ---------- */
   .ledger{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
-  .lrow{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;padding:17px 18px;border-bottom:1px solid var(--rule)}
+  .lrow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:17px 18px;border-bottom:1px solid var(--rule)}
   .lrow:last-child{border-bottom:0}
   .tick{width:24px;height:24px;border-radius:50%;background:var(--green-tint);color:var(--green);display:grid;place-items:center;flex:none;margin-top:2px}
   .tick svg{width:13px;height:13px}
   .lrow h4{font-size:16.5px;font-weight:700}
   .lrow .meta{font-size:12.5px;color:var(--mute);margin-top:2px}
   .lrow .desc{font-size:14px;margin-top:7px;max-width:58ch}
-  .lrow .money{text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
-  .lrow .money small{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin-top:3px}
-  @media (max-width:560px){
-    .lrow{grid-template-columns:auto 1fr}
-    .lrow .money{grid-column:2;text-align:left;margin-top:8px}
-    .lrow .money small{display:inline;margin-left:6px;text-transform:none;letter-spacing:0}
-  }
 
   /* ---------- On site now ---------- */
   .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:16px}
@@ -151,7 +144,6 @@
   .stop.soft .when{color:var(--mute)}
   .stop h4{font-size:16px;font-weight:700;margin-top:3px}
   .stop .d{font-size:13.5px;color:var(--mute);margin-top:3px;max-width:60ch}
-  .stop .v{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--ink)}
 
   /* ---------- Tenders ---------- */
   .tender-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
@@ -159,7 +151,6 @@
   .tenders th,.tenders td{text-align:left;padding:12px 16px;font-size:13.5px;border-bottom:1px solid var(--rule)}
   .tenders th{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:var(--bg)}
   .tenders tr:last-child td{border-bottom:0}
-  .tenders td.n{text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .tenders td.job-n{font-weight:600;color:var(--ink)}
 
   /* ---------- Photo band ---------- */
@@ -215,7 +206,7 @@
   <div class="hero-copy">
     <div class="wrap">
       <span class="kicker">Two months on site</span>
-      <h2>Two jobs signed off, six running, and £0.5m booked in before November</h2>
+      <h2>Two jobs signed off, six sites running, and four more starting before November</h2>
       <p class="stand">West Street broke ground on Monday, Solent Grange is eight weeks in the diary, and Silver Cranes follows on the 21st. Here is where every job stands.</p>
     </div>
   </div>
@@ -236,14 +227,14 @@
       <div class="foot">sites with crews working</div>
     </div>
     <div class="stat b">
-      <div class="lbl">Value on site</div>
-      <div class="num">£2.21m</div>
-      <div class="foot">across the three priced contracts</div>
+      <div class="lbl">Active on register</div>
+      <div class="num">21</div>
+      <div class="foot">jobs open, including those above</div>
     </div>
     <div class="stat a">
       <div class="lbl">Starting by 31 Oct</div>
       <div class="num">4</div>
-      <div class="foot">≈ £0.51m of new work</div>
+      <div class="foot">new sites in the diary</div>
     </div>
   </div>
 </div>
@@ -264,9 +255,8 @@
         <div>
           <h4>Norry Smith — Driveway</h4>
           <div class="meta">Norman Smith &middot; LGH-2026-039 &middot; Completed 27 July 2026</div>
-          <p class="desc">Tarmac driveway, won on a referral from Christian. Deposit taken 3 July, on site and finished inside the month.</p>
+          <p class="desc">Tarmac driveway, won on a referral from Christian. On site and finished inside the month.</p>
         </div>
-        <div class="money">£8,500<small>Contract</small></div>
       </div>
 
       <div class="lrow">
@@ -276,13 +266,12 @@
           <div class="meta">Dorset &middot; LGH-2026-033 &middot; Completed August 2026</div>
           <p class="desc">Groundworks completed and snagged out over the summer, with the last of the turfing going down in early September ahead of the clients returning.</p>
         </div>
-        <div class="money">—<small>Not recorded</small></div>
       </div>
     </div>
 
     <div class="note">
       <div class="h">Register note</div>
-      <p>Horton Commercials (barrier repair, Ferndown Industrial Estate, £490) is marked <b>Complete</b> on the projects register but carries no completion date and its task list is still open — so it is not counted above. Worth five minutes to close out properly.</p>
+      <p>Horton Commercials (barrier repair, Ferndown Industrial Estate) is marked <b>Complete</b> on the projects register but carries no completion date and its task list is still open — so it is not counted above. Worth five minutes to close out properly.</p>
     </div>
   </section>
 
@@ -309,7 +298,6 @@
           <span><b>Started</b> 9 April 2026</span>
           <span><b>PM</b> Chris Appleby / Dean Bradley</span>
           <span><b>Scheme</b> 78 bases over 4 phases</span>
-          <span><b>Register value</b> £1.96m</span>
         </div>
       </article>
 
@@ -327,7 +315,7 @@
           <div class="bar"><span style="width:76%"></span></div>
         </div>
         <div class="facts">
-          <span><b>Value</b> £193,410</span>
+          <span><b>Scope</b> Full groundworks &amp; drainage package</span>
           <span><b>PM</b> Chris Appleby</span>
         </div>
       </article>
@@ -346,7 +334,6 @@
           <div class="bar"><span style="width:3%"></span></div>
         </div>
         <div class="facts">
-          <span><b>Value</b> £52,873</span>
           <span><b>Running it</b> Mick</span>
           <span><b>PM</b> Chris Appleby</span>
         </div>
@@ -426,7 +413,7 @@
       <div class="stop">
         <div class="when">Mon 21 September</div>
         <h4>Silver Cranes — Tower Park</h4>
-        <p class="d">On time and confirmed. Commercial job, so no client interface at site level. Pre-commencement with Damon this week. <span class="v">≈ £76,000</span></p>
+        <p class="d">On time and confirmed. Commercial job, so no client interface at site level. Pre-commencement with Damon this week. George running it with assistance.</p>
       </div>
 
       <div class="stop">
@@ -438,25 +425,25 @@
       <div class="stop soft">
         <div class="when">End September — target</div>
         <h4>Timbertoft</h4>
-        <p class="d">Client wants an end-of-September start; a soft start with Christie and the big digger is possible. Date still to be confirmed. <span class="v">≈ £100,000</span></p>
+        <p class="d">Client wants an end-of-September start; a soft start with Christie and the big digger is possible. Date still to be confirmed.</p>
       </div>
 
       <div class="stop">
         <div class="when">Week commencing 12 October</div>
         <h4>Benham Estate</h4>
-        <p class="d">The largest confirmed start in the pipeline. Pre-commencement meeting held ahead of mobilisation. <span class="v">≈ £300,000</span></p>
+        <p class="d">The largest confirmed start in the pipeline. Pre-commencement meeting held ahead of mobilisation.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">Late October — indicative</div>
         <h4>Kings Avenue, Poole</h4>
-        <p class="d">Garage groundworks for Mr &amp; Mrs Bailey. Tied to West Street finishing; amended quote and a confirmed start date still outstanding. <span class="v">£30,450</span></p>
+        <p class="d">Garage groundworks for Mr &amp; Mrs Bailey. Tied to West Street finishing; amended quote and a confirmed start date still outstanding.</p>
       </div>
 
       <div class="stop soft">
         <div class="when">After Matcham's — ≈ 5 weeks</div>
         <h4>Venom</h4>
-        <p class="d">Deposit paid and ready to go. Four to five operatives with the big machines once Matcham's releases the crew.</p>
+        <p class="d">Committed and ready to go. Four to five operatives with the big machines once Matcham's releases the crew.</p>
       </div>
 
       <div class="stop soft">
@@ -477,15 +464,15 @@
     <div class="tender-wrap">
       <table class="tenders">
         <thead>
-          <tr><th>Job</th><th>Client</th><th style="text-align:right">Value</th></tr>
+          <tr><th>Job</th><th>Client</th><th>Division</th></tr>
         </thead>
         <tbody>
-          <tr><td class="job-n">RMB Chivenor — Hangar 14 demolition</td><td>Robert Rice Ltd / MoD</td><td class="n">£88,542</td></tr>
-          <tr><td class="job-n">White Farm — drainage &amp; external works</td><td>BJM Ltd</td><td class="n">£28,315</td></tr>
-          <tr><td class="job-n">Superior Seals — tool room adaptations</td><td>Bennington Green</td><td class="n">£2,890</td></tr>
-          <tr><td class="job-n">Seven Steps Upway</td><td>—</td><td class="n">TBC</td></tr>
-          <tr><td class="job-n">7 Nugent Road</td><td>—</td><td class="n">TBC</td></tr>
-          <tr><td class="job-n">Northerwood Farm — Phase 2</td><td>—</td><td class="n">TBC</td></tr>
+          <tr><td class="job-n">RMB Chivenor — Hangar 14 demolition</td><td>Robert Rice Ltd / MoD</td><td>Civil Engineering</td></tr>
+          <tr><td class="job-n">White Farm — drainage &amp; external works</td><td>BJM Ltd</td><td>Groundworks</td></tr>
+          <tr><td class="job-n">Superior Seals — tool room adaptations</td><td>Bennington Green</td><td>Groundworks</td></tr>
+          <tr><td class="job-n">Seven Steps Upway</td><td>—</td><td>Groundworks</td></tr>
+          <tr><td class="job-n">7 Nugent Road</td><td>—</td><td>Groundworks</td></tr>
+          <tr><td class="job-n">Northerwood Farm — Phase 2</td><td>—</td><td>Groundworks</td></tr>
         </tbody>
       </table>
     </div>

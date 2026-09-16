@@ -34,7 +34,7 @@ palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
 ## Sources
 
 - Notion **Projects** register (`LG Howson Operations Hub / Projects`) — status,
-  client, contract value, start and end dates
+  client, start and end dates
 - Notion project pages — Forest Valley Court, Clifton Road, 73 West Street,
   Solent Grange, Norry Smith, Stanpit, Horton Commercials
 - Planning meeting, 8 September 2026 (Notion meeting notes)
@@ -52,6 +52,9 @@ palette, redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]`.
   Projects page archive list.
 - Silver Cranes, Benham Estate, Timbertoft and Venom appear only in the
   auto-transcribed 8 September meeting notes and are not on the register —
-  spellings and values need confirming before this goes outside the company.
+  spellings and details need confirming before this goes outside the company.
+- **No job values, contract sums or costs appear anywhere in the newsletter.**
+  Removed at the client's request in v2 — the stat strip, job cards, pipeline
+  timeline and tender table all carry programme and scope detail instead.
 - Commercially sensitive material from the same meeting (debtor balances,
   supplier margins, individual performance) is deliberately excluded.
