@@ -1,3 +1,10 @@
 # Contains staff names + leave/sick history — keep OUT of the public repo.
 # The hosted dashboard loads this data live from the Apps Script feed instead.
 dailylog.js
+
+# Advisor (advisor/): personal profiles and the daily journal stay local.
+advisor/journal/*
+!advisor/journal/README.md
+advisor/profile/*
+!advisor/profile/README.md
+!advisor/profile/example-profile.csv
